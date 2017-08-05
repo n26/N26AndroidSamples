@@ -27,4 +27,31 @@ android {
 }
 
 dependencies {
+    def commonDependencies = rootProject.ext.commonDependencies
+    def developmentDependencies = rootProject.ext.developmentDependencies
+
+    implementation project(':base')
+
+    // Dagger 2
+    api commonDependencies.dagger2
+    annotationProcessor commonDependencies.dagger2Compiler
+    testAnnotationProcessor commonDependencies.dagger2Compiler
+    compileOnly commonDependencies.javaxAnnotation
+
+    // Timber
+    api commonDependencies.timber
+
+    // Stetho
+    implementation developmentDependencies.stetho
+    implementation developmentDependencies.stethoOkHttp
+
+    // Leak Canary
+    debugImplementation developmentDependencies.leakcanary
+    releaseImplementation developmentDependencies.leakcanaryNoOp
+    testImplementation developmentDependencies.leakcanaryNoOp
+
+    // Chuck
+    debugImplementation developmentDependencies.chuck
+    releaseImplementation developmentDependencies.chuckNoOp
+    testImplementation developmentDependencies.chuckNoOp
 }

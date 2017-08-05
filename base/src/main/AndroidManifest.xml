@@ -1,11 +1,2 @@
-<manifest package="de.n26.n26androidsamples.base"
-          xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <application
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"/>
+<manifest package="de.n26.n26androidsamples.base">
 </manifest>

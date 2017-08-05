@@ -1,9 +1,5 @@
 package de.n26.n26androidsamples;
 
-/**
- * Created by Lucia on 05/08/2017.
- */
-
 import javax.inject.Singleton;
 
 import dagger.Component;

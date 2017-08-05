@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.injection.modules;
+package de.n26.n26androidsamples.base.injection.modules;
 
 import javax.inject.Singleton;
 

@@ -9,13 +9,17 @@ android {
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
         targetSdkVersion androidVersions.targetSdkVersion
+
+        buildConfigField "String", "N26_FAKE_API_URL", n26_fake_staging_endpoint_url
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     baseFeature true
 
     compileOptions {
@@ -81,6 +85,10 @@ dependencies {
     annotationProcessor commonDependencies.autoValue
     testAnnotationProcessor commonDependencies.autoValue
     androidTestAnnotationProcessor commonDependencies.autoValue
+
+    // AutoValue Type Adapter
+    compileOnly commonDependencies.autoValueGson
+    annotationProcessor commonDependencies.autoValueGson
 
     // Optionals
     api commonDependencies.options

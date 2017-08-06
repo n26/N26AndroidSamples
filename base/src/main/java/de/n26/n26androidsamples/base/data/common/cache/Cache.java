@@ -2,87 +2,112 @@ package de.n26.n26androidsamples.base.data.common.cache;
 
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
 import de.n26.n26androidsamples.base.common.providers.TimestampProvider;
 import de.n26.n26androidsamples.base.common.utils.ListUtils;
+import de.n26.n26androidsamples.base.data.common.store.Store;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import polanski.option.Option;
+import polanski.option.function.Func1;
 
 import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
 
 /**
- Generic cache with timeout for the entries.
+ * Generic cache with timeout for the entries.
  */
-public class Cache<Key, Value> {
+public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
 
     @NonNull
     private final TimestampProvider timestampProvider;
 
     @NonNull
+    private final AndroidPreconditions androidPreconditions;
+
+    @NonNull
+    private final Func1<Value, Key> extractKeyFromModel;
+
+    @NonNull
     private final Option<Long> itemLifespanMs;
 
-    private final Map<Key, CacheEntry<Value>> cache = new HashMap<>();
+    private final Map<Key, CacheEntry<Value>> cache = new ConcurrentHashMap<>();
 
-    public Cache(@NonNull final TimestampProvider timestampProvider) {
+    public Cache(@NonNull final TimestampProvider timestampProvider,
+                 @NonNull final AndroidPreconditions androidPreconditions,
+                 @NonNull final Func1<Value, Key> extractKeyFromModel) {
+        this(timestampProvider, androidPreconditions, none(), extractKeyFromModel);
+    }
+
+    public Cache(@NonNull final TimestampProvider timestampProvider,
+                 @NonNull final AndroidPreconditions androidPreconditions,
+                 final long timeoutMs,
+                 @NonNull final Func1<Value, Key> extractKeyFromModel) {
+        this(timestampProvider, androidPreconditions, ofObj(timeoutMs), extractKeyFromModel);
+    }
+
+    private Cache(@NonNull final TimestampProvider timestampProvider,
+                  @NonNull final AndroidPreconditions androidPreconditions,
+                  @NonNull final Option<Long> timeoutMs,
+                  @NonNull final Func1<Value, Key> extractKeyFromModel) {
         this.timestampProvider = timestampProvider;
-        itemLifespanMs = none();
+        this.androidPreconditions = androidPreconditions;
+        this.itemLifespanMs = timeoutMs;
+        this.extractKeyFromModel = extractKeyFromModel;
     }
 
-    public Cache(@NonNull final TimestampProvider timestampProvider, final long timeoutMs) {
-        this.timestampProvider = timestampProvider;
-        itemLifespanMs = ofObj(timeoutMs);
+
+    @Override
+    public void store(@NonNull Value value) {
+        androidPreconditions.assertWorkerThread();
+
+        final Key key = extractKeyFromModel.call(value);
+        final CacheEntry<Value> cacheEntry = CacheEntry.create(value, timestampProvider.currentTimeMillis());
+        cache.put(key, cacheEntry);
+
     }
 
-    /**
-     Stores the passed model in the cache.
-     @param key the unique key for the object in the cache
-     */
-    void store(@NonNull final Key key, @NonNull final Value model) {
-        final CacheEntry<Value> cacheEntry = CacheEntry.create(model, timestampProvider.currentTimeMillis());
-        synchronized (cache) {
-            cache.put(key, cacheEntry);
-        }
+    @Override
+    public void storeAll(@NonNull List<Value> values) {
+        androidPreconditions.assertWorkerThread();
+
+        Observable.fromIterable(values)
+                  .toMap(extractKeyFromModel::call, value -> CacheEntry.create(value, timestampProvider.currentTimeMillis()))
+                  .subscribe(cache::putAll);
     }
 
-    /**
-     Returns SOME of the cached object for the given key if it existed, NONE otherwise. The cached object should not be modified, modifying this object
-     can result in inconsistencies in the cache. A copy of the object should be made in the case that it needs some modification.
-     */
+    @Override
     @NonNull
-    Option<Value> get(@NonNull final Key key) {
-        synchronized (cache) {
-            // Might be null if no entry with the specified key was previously stored
-            final CacheEntry<Value> cacheEntry = cache.get(key);
-            return ofObj(cacheEntry).filter(this::notExpired)
-                                    .map(CacheEntry::cachedObject);
-        }
+    public Maybe<Value> get(@NonNull final Key key) {
+        androidPreconditions.assertWorkerThread();
+
+        final CacheEntry<Value> cacheEntry = cache.get(key);
+        return Maybe.just(cacheEntry)
+                    .filter(this::notExpired)
+                    .map(CacheEntry::cachedObject);
+    }
+
+    @Override
+    @NonNull
+    public Maybe<List<Value>> getAll() {
+        androidPreconditions.assertWorkerThread();
+
+        return Observable.fromIterable(cache.values())
+                         .map(CacheEntry::cachedObject)
+                         .toList()
+                         .filter(ListUtils::isNotEmpty);
     }
 
     /**
-     Returns SOME of a list containing all cached objects, NONE if the cache is empty. The cached objects should not be modified, modifying this object
-     can result in inconsistencies in the cache. A copy of the object should be made in the case that it needs some modification.
+     * Clears the cache removing all the cached objects.
      */
-    Option<List<Value>> getAll() {
-        final List<Value> modelList = new ArrayList<>();
-        synchronized (cache) {
-            for (Key key : cache.keySet()) {
-                get(key).ifSome(modelList::add);
-            }
-        }
-        return ofObj(modelList).filter(list -> ListUtils.isNotEmpty(list));
-    }
-
-    /**
-     Clears the cache removing all the cached objects.
-     */
-    void clear() {
-        synchronized (cache) {
-            cache.clear();
-        }
+    @Override
+    public void clear() {
+        cache.clear();
     }
 
     private boolean notExpired(@NonNull final CacheEntry<Value> cacheEntry) {

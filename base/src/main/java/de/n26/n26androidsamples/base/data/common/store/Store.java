@@ -6,8 +6,9 @@ import java.util.List;
 
 import io.reactivex.Maybe;
 
+
 /**
- * Created by Lucia on 06/08/2017.
+ * Interface for any type of store. Don't implement this directly, use {@link MemoryStore} or {@link DiskStore} so it is more descriptive.
  */
 public interface Store<Key, Value> {
 
@@ -17,11 +18,15 @@ public interface Store<Key, Value> {
 
     void clear();
 
+    @NonNull
     Maybe<Value> get(@NonNull final Key key);
 
+    @NonNull
     Maybe<List<Value>> getAll();
 
-    interface MemoryStore<Key, Value> extends Store<Key, Value> {}
+    interface MemoryStore<Key, Value> extends Store<Key, Value> {
+    }
 
-    interface DiskStore<Key, Value> extends Store<Key, Value> {}
+    interface DiskStore<Key, Value> extends Store<Key, Value> {
+    }
 }

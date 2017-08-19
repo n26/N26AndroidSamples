@@ -9,8 +9,6 @@ android {
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
         targetSdkVersion androidVersions.targetSdkVersion
-
-        buildConfigField "String", "N26_FAKE_API_URL", n26_fake_staging_endpoint_url
     }
 
     buildTypes {
@@ -34,6 +32,7 @@ dependencies {
     def commonTestDependencies = rootProject.ext.commonTestDependencies
 
     application project(':app')
+    feature project(":credit")
 
     // Android
     api commonDependencies.supportAppCompatV7

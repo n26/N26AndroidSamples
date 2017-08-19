@@ -4,5 +4,5 @@ import dagger.Module;
 import de.n26.n26androidsamples.credit.CreditModule;
 
 @Module(includes = {CreditModule.class})
-public class FeaturesModule {
+public final class FeaturesModule {
 }

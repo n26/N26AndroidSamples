@@ -2,6 +2,7 @@ package de.n26.n26androidsamples.injection.modules;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapterFactory;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,7 +23,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = InstrumentationModule.class)
-public class NetworkModule {
+public final class NetworkModule {
 
     private static final String API_URL = "API_URL";
 
@@ -54,8 +55,14 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    static Gson provideGson() {
-        return new GsonBuilder().create();
+    static Gson provideGson(Set<TypeAdapterFactory> typeAdapters) {
+        final GsonBuilder builder = new GsonBuilder();
+
+        for (TypeAdapterFactory factory : typeAdapters) {
+            builder.registerTypeAdapterFactory(factory);
+        }
+
+        return builder.create();
     }
 
     @Provides

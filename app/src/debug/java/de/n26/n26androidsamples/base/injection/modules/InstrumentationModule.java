@@ -5,19 +5,14 @@ import android.content.Context;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.readystatesoftware.chuck.ChuckInterceptor;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoSet;
-import de.n26.n26androidsamples.base.common.injection.modules.NetworkModule;
-import de.n26.n26androidsamples.base.common.injection.modules.NetworkModule.AppInterceptor;
-import de.n26.n26androidsamples.base.common.injection.modules.NetworkModule.NetworkInterceptor;
-import de.n26.n26androidsamples.base.common.injection.qualifiers.ForApplication;
+import de.n26.n26androidsamples.injection.modules.NetworkModule.AppInterceptor;
+import de.n26.n26androidsamples.injection.modules.NetworkModule.NetworkInterceptor;
+import de.n26.n26androidsamples.injection.qualifiers.ForApplication;
 import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 

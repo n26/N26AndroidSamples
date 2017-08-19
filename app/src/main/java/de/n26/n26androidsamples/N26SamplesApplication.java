@@ -8,9 +8,6 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-/**
- * Created by Lucia on 05/08/2017.
- */
 public class N26SamplesApplication extends Application {
     private ApplicationComponent component;
 

@@ -3,12 +3,10 @@ package de.n26.n26androidsamples;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import de.n26.n26androidsamples.base.common.injection.modules.NetworkModule;
 import de.n26.n26androidsamples.base.injection.modules.LoggingModule;
+import de.n26.n26androidsamples.injection.modules.FeaturesModule;
+import de.n26.n26androidsamples.injection.modules.NetworkModule;
 
-/**
- Created by luciapayo on 11/06/2017
- */
 @Singleton
 @Component(modules = {NetworkModule.class, LoggingModule.class, FeaturesModule.class})
 public interface ApplicationComponent {

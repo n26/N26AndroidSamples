@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.common.injection.modules;
+package de.n26.n26androidsamples.injection.modules;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

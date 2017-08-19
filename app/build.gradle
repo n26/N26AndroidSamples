@@ -11,8 +11,6 @@ android {
         targetSdkVersion androidVersions.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
-        buildConfigField "String", "N26_FAKE_API_URL", n26_fake_staging_endpoint_url
     }
 
     buildTypes {

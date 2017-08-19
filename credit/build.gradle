@@ -27,4 +27,13 @@ dependencies {
 
     implementation project(':base')
 
+    // Auto-Value
+    compileOnly commonDependencies.autoValue
+    annotationProcessor commonDependencies.autoValue
+    testAnnotationProcessor commonDependencies.autoValue
+    androidTestAnnotationProcessor commonDependencies.autoValue
+
+    // AutoValue Type Adapter
+    compileOnly commonDependencies.autoValueGson
+    annotationProcessor commonDependencies.autoValueGson
 }

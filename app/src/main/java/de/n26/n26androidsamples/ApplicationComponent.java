@@ -10,7 +10,7 @@ import de.n26.n26androidsamples.base.injection.modules.LoggingModule;
  Created by luciapayo on 11/06/2017
  */
 @Singleton
-@Component(modules = {NetworkModule.class, LoggingModule.class})
+@Component(modules = {NetworkModule.class, LoggingModule.class, FeaturesModule.class})
 public interface ApplicationComponent {
 
     void inject(N26SamplesApplication app);

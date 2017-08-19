@@ -21,9 +21,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Lucia on 05/08/2017.
- */
 @Module(includes = InstrumentationModule.class)
 public class NetworkModule {
 

@@ -9,6 +9,8 @@ android {
     defaultConfig {
         minSdkVersion androidVersions.minSdkVersion
         targetSdkVersion androidVersions.targetSdkVersion
+
+        buildConfigField "String", "N26_FAKE_API_URL", n26_fake_staging_endpoint_url
     }
 
     buildTypes {
@@ -88,6 +90,8 @@ dependencies {
     // AutoValue Type Adapter
     compileOnly commonDependencies.autoValueGson
     annotationProcessor commonDependencies.autoValueGson
+    testAnnotationProcessor commonDependencies.autoValueGson
+    androidTestAnnotationProcessor commonDependencies.autoValueGson
 
     // Optionals
     api commonDependencies.options

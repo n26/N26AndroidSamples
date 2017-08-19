@@ -39,7 +39,7 @@ public final class NetworkModule {
 
     @Provides
     @Singleton
-    static Retrofit provideFreeSoundApi(@Named(API_URL) String baseUrl, Gson gson, OkHttpClient client) {
+    static Retrofit provideN26Api(@Named(API_URL) String baseUrl, Gson gson, OkHttpClient client) {
         return new Retrofit.Builder().addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                      .addConverterFactory(GsonConverterFactory.create(gson))
                                      .client(client)

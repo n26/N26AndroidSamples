@@ -12,9 +12,9 @@ import io.reactivex.Maybe;
  */
 public interface Store<Key, Value> {
 
-    void store(@NonNull final Value value);
+    void put(@NonNull final Value value);
 
-    void storeAll(@NonNull final List<Value> valueList);
+    void putAll(@NonNull final List<Value> valueList);
 
     void clear();
 

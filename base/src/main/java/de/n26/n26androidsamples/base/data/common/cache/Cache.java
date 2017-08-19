@@ -19,7 +19,7 @@ import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
 
 /**
- * Generic cache with timeout for the entries.
+ * Generic memory cache with timeout for the entries.
  */
 public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
 
@@ -40,29 +40,28 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
     public Cache(@NonNull final TimestampProvider timestampProvider,
                  @NonNull final AndroidPreconditions androidPreconditions,
                  @NonNull final Func1<Value, Key> extractKeyFromModel) {
-        this(timestampProvider, androidPreconditions, none(), extractKeyFromModel);
+        this(timestampProvider, androidPreconditions, extractKeyFromModel, none());
     }
 
     public Cache(@NonNull final TimestampProvider timestampProvider,
                  @NonNull final AndroidPreconditions androidPreconditions,
-                 final long timeoutMs,
-                 @NonNull final Func1<Value, Key> extractKeyFromModel) {
-        this(timestampProvider, androidPreconditions, ofObj(timeoutMs), extractKeyFromModel);
+                 @NonNull final Func1<Value, Key> extractKeyFromModel,
+                 final long timeoutMs) {
+        this(timestampProvider, androidPreconditions, extractKeyFromModel, ofObj(timeoutMs));
     }
 
     private Cache(@NonNull final TimestampProvider timestampProvider,
                   @NonNull final AndroidPreconditions androidPreconditions,
-                  @NonNull final Option<Long> timeoutMs,
-                  @NonNull final Func1<Value, Key> extractKeyFromModel) {
+                  @NonNull final Func1<Value, Key> extractKeyFromModel,
+                  @NonNull final Option<Long> timeoutMs) {
         this.timestampProvider = timestampProvider;
         this.androidPreconditions = androidPreconditions;
         this.itemLifespanMs = timeoutMs;
         this.extractKeyFromModel = extractKeyFromModel;
     }
 
-
     @Override
-    public void store(@NonNull Value value) {
+    public void put(@NonNull Value value) {
         androidPreconditions.assertWorkerThread();
 
         final Key key = extractKeyFromModel.call(value);
@@ -72,7 +71,7 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
     }
 
     @Override
-    public void storeAll(@NonNull List<Value> values) {
+    public void putAll(@NonNull List<Value> values) {
         androidPreconditions.assertWorkerThread();
 
         Observable.fromIterable(values)
@@ -102,11 +101,10 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
                          .filter(ListUtils::isNotEmpty);
     }
 
-    /**
-     * Clears the cache removing all the cached objects.
-     */
     @Override
     public void clear() {
+        androidPreconditions.assertWorkerThread();
+
         cache.clear();
     }
 

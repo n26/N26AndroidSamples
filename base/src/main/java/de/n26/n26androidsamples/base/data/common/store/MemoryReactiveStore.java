@@ -19,7 +19,7 @@ import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
 
 /**
- * Created by Lucia on 06/08/2017.
+ * This reactive store has only a memory cache as form of storage.
  */
 public class MemoryReactiveStore<Key, Value> {
 
@@ -41,18 +41,18 @@ public class MemoryReactiveStore<Key, Value> {
 
     public MemoryReactiveStore(@NonNull final Store.MemoryStore<Key, Value> cache,
                                @NonNull final AndroidPreconditions androidPreconditions,
-                               @NonNull Func1<Value, Key> extractKeyFromModel) {
+                               @NonNull final Func1<Value, Key> extractKeyFromModel) {
         this.allProcessor = PublishProcessor.<Option<List<Value>>>create().toSerialized();
         this.cache = cache;
         this.androidPreconditions = androidPreconditions;
         this.extractKeyFromModel = extractKeyFromModel;
     }
 
-    public void store(@NonNull final Value model) {
+    public void storeSingular(@NonNull final Value model) {
         androidPreconditions.assertWorkerThread();
 
         final Key key = extractKeyFromModel.call(model);
-        cache.store(model);
+        cache.put(model);
         getOrCreateSubjectForKey(key).onNext(ofObj(model));
         // One item has been added/updated, notify to all as well
         final Option<List<Value>> allValues = cache.getAll().map(Option::ofObj).blockingGet(none());
@@ -62,7 +62,7 @@ public class MemoryReactiveStore<Key, Value> {
     public void storeAll(@NonNull final List<Value> modelList) {
         androidPreconditions.assertWorkerThread();
 
-        cache.storeAll(modelList);
+        cache.putAll(modelList);
         allProcessor.onNext(ofObj(modelList));
         // Publish in all the existing single item streams.
         // This could be improved publishing only in the items that changed. Maybe use DiffUtils?
@@ -77,7 +77,7 @@ public class MemoryReactiveStore<Key, Value> {
     }
 
     @NonNull
-    public Flowable<Option<Value>> getBehaviorStream(@NonNull final Key key) {
+    public Flowable<Option<Value>> getSingularBehaviorStream(@NonNull final Key key) {
         androidPreconditions.assertWorkerThread();
 
         final Option<Value> model = cache.get(key).map(Option::ofObj).blockingGet(none());

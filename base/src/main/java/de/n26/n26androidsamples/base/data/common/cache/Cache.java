@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
 import de.n26.n26androidsamples.base.common.providers.TimestampProvider;
 import de.n26.n26androidsamples.base.common.utils.ListUtils;
-import de.n26.n26androidsamples.base.data.common.store.Store;
+import de.n26.n26androidsamples.base.data.common.store.Store.MemoryStore;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import polanski.option.Option;
@@ -21,7 +21,7 @@ import static polanski.option.Option.ofObj;
 /**
  * Generic memory cache with timeout for the entries.
  */
-public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
+public class Cache<Key, Value> implements MemoryStore<Key, Value> {
 
     @NonNull
     private final TimestampProvider timestampProvider;
@@ -65,9 +65,7 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
         androidPreconditions.assertWorkerThread();
 
         final Key key = extractKeyFromModel.call(value);
-        final CacheEntry<Value> cacheEntry = CacheEntry.create(value, timestampProvider.currentTimeMillis());
-        cache.put(key, cacheEntry);
-
+        cache.put(key, createCacheEntry(value));
     }
 
     @Override
@@ -75,7 +73,7 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
         androidPreconditions.assertWorkerThread();
 
         Observable.fromIterable(values)
-                  .toMap(extractKeyFromModel::call, value -> CacheEntry.create(value, timestampProvider.currentTimeMillis()))
+                  .toMap(extractKeyFromModel::call, this::createCacheEntry)
                   .subscribe(cache::putAll);
     }
 
@@ -84,8 +82,8 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
     public Maybe<Value> get(@NonNull final Key key) {
         androidPreconditions.assertWorkerThread();
 
-        final CacheEntry<Value> cacheEntry = cache.get(key);
-        return Maybe.just(cacheEntry)
+        return Maybe.just(cache.get(key))
+                    .filter(entry -> entry != null)
                     .filter(this::notExpired)
                     .map(CacheEntry::cachedObject);
     }
@@ -106,6 +104,13 @@ public class Cache<Key, Value> implements Store.MemoryStore<Key, Value> {
         androidPreconditions.assertWorkerThread();
 
         cache.clear();
+    }
+
+    @NonNull
+    private CacheEntry<Value> createCacheEntry(@NonNull final Value value) {
+        return CacheEntry.<Value>builder().cachedObject(value)
+                                          .creationTimestamp(timestampProvider.currentTimeMillis())
+                                          .build();
     }
 
     private boolean notExpired(@NonNull final CacheEntry<Value> cacheEntry) {

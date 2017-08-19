@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.auto.value.AutoValue;
 
 /**
- Cache entry that contains the object and the creation timestamp.
+ * Cache entry that contains the object and the creation timestamp.
  */
 @AutoValue
 abstract class CacheEntry<T> {
@@ -15,7 +15,17 @@ abstract class CacheEntry<T> {
 
     abstract long creationTimestamp();
 
-    static <T> CacheEntry<T> create(@NonNull final T cachedObject, final long creationTimestampMillis) {
-        return new AutoValue_CacheEntry<>(cachedObject, creationTimestampMillis);
+    static <T> Builder<T> builder() {
+        return new AutoValue_CacheEntry.Builder<>();
+    }
+
+    @AutoValue.Builder
+    interface Builder<T> {
+
+        Builder<T> cachedObject(T object);
+
+        Builder<T> creationTimestamp(long creationTimestamp);
+
+        CacheEntry<T> build();
     }
 }

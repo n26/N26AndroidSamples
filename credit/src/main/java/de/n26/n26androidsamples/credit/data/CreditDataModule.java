@@ -1,5 +1,6 @@
 package de.n26.n26androidsamples.credit.data;
 
+import com.google.gson.Gson;
 import com.google.gson.TypeAdapterFactory;
 
 import dagger.Module;
@@ -13,5 +14,15 @@ public class CreditDataModule {
     @IntoSet
     TypeAdapterFactory provideTypeAdapterFactory() {
         return CreditTypeAdapterFactory.create();
+    }
+
+//    @Provides
+//    CreditService provideCreditService(Retrofit retrofit) {
+//        return retrofit.create(CreditService.class);
+//    }
+
+    @Provides
+    CreditService provideMockCreditService(Gson gson) {
+        return new MockCreditService(gson);
     }
 }

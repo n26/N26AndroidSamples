@@ -4,6 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.n26.n26androidsamples.base.data.common.EssentialParamMissingException;
 import de.n26.n26androidsamples.credit.data.CreditDataConstants.RawDraftStatus;
 import de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus;
@@ -13,8 +16,18 @@ import timber.log.Timber;
 final class CreditDraftSummaryMapper {
 
     @NonNull
+    static List<CreditDraftSummary> processList(@NonNull final List<CreditDraftSummaryRaw> rawList) {
+        final List<CreditDraftSummary> draftList = new ArrayList<>();
+        for (CreditDraftSummaryRaw raw : rawList) {
+            draftList.add(processSingular(raw));
+        }
+
+        return draftList;
+    }
+
+    @NonNull
     @SuppressWarnings("ConstantConditions")
-    static CreditDraftSummary processRaw(@NonNull final CreditDraftSummaryRaw raw) {
+    static CreditDraftSummary processSingular(@NonNull final CreditDraftSummaryRaw raw) {
         assertEssentialParams(raw);
 
         return CreditDraftSummary.builder()

@@ -51,11 +51,6 @@ dependencies {
     annotationProcessor commonDependencies.archLifecycleCompiler
     testAnnotationProcessor commonDependencies.archLifecycleCompiler
 
-    // Room
-    implementation commonDependencies.roomRuntime
-    annotationProcessor commonDependencies.roomCompiler
-    androidTestImplementation commonDependencies.roomTesting
-
     // Dagger 2
     api commonDependencies.dagger2
     annotationProcessor commonDependencies.dagger2Compiler

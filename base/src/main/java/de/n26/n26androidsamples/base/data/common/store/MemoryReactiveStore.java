@@ -21,7 +21,7 @@ import static polanski.option.Option.ofObj;
 /**
  * This reactive store has only a memory cache as form of storage.
  */
-public class MemoryReactiveStore<Key, Value> {
+public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value> {
 
     @NonNull
     private final Store.MemoryStore<Key, Value> cache;

@@ -8,8 +8,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.ElementsIntoSet;
-import de.n26.n26androidsamples.base.common.injection.modules.NetworkModule.AppInterceptor;
-import de.n26.n26androidsamples.base.common.injection.modules.NetworkModule.NetworkInterceptor;
+import de.n26.n26androidsamples.injection.modules.NetworkModule.AppInterceptor;
+import de.n26.n26androidsamples.injection.modules.NetworkModule.NetworkInterceptor;
 import okhttp3.Interceptor;
 
 /**

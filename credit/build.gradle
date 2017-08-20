@@ -41,4 +41,10 @@ dependencies {
     // AutoValue Type Adapter
     compileOnly commonDependencies.autoValueGson
     annotationProcessor commonDependencies.autoValueGson
+
+
+    // Unit testing
+    testImplementation commonTestDependencies.junit
+    testImplementation commonTestDependencies.assertj
+    testImplementation commonTestDependencies.mockito
 }

@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base;
+package de.n26.n26androidsamples.credit;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -7,6 +7,8 @@ import org.junit.runners.model.Statement;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
+// FIXME: This class should be in base module but the project can't compile when is placed there.
+// Move when the problem with tests and modules is solved.
 public class RxSchedulerOverrideRule implements TestRule {
 
     @Override

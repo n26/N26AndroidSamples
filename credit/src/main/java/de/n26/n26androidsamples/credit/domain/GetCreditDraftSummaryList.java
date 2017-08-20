@@ -10,6 +10,7 @@ import de.n26.n26androidsamples.base.common.rx.UnwrapOptionTransformer;
 import de.n26.n26androidsamples.base.domain.ReactiveInteractor.GetInteractor;
 import de.n26.n26androidsamples.credit.data.CreditDraftSummary;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import polanski.option.Option;
 
@@ -33,14 +34,15 @@ public class GetCreditDraftSummaryList implements GetInteractor<Void, List<Credi
     @Override
     public Flowable<List<CreditDraftSummary>> getBehaviorStream(@NonNull final Option<Void> params) {
         return creditRepository.getCreditDraftSummaryListBehaviorStream()
-                               .compose(this::fetchIfRepositoryIsEmpty)
+                               .flatMap(draftsOption -> fetchIfRepositoryIsEmpty(draftsOption).andThen(Flowable.just(draftsOption)))
                                .compose(new UnwrapOptionTransformer<>());
     }
 
     @NonNull
-    private Flowable<Option<List<CreditDraftSummary>>> fetchIfRepositoryIsEmpty(@NonNull final Flowable<Option<List<CreditDraftSummary>>> drafts) {
-        return drafts.filter(Option::isNone)
-                     .flatMapCompletable(it -> creditRepository.fetchCreditDraftSummariesSingle())
-                     .andThen(drafts);
+    private Completable fetchIfRepositoryIsEmpty(@NonNull final Option<List<CreditDraftSummary>> drafts) {
+        return drafts.isNone()
+               ? creditRepository.fetchCreditDraftSummariesSingle()
+               : Completable.complete();
     }
+
 }

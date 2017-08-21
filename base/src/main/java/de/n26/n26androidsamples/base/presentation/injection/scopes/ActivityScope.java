@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.injection.scopes;
+package de.n26.n26androidsamples.base.presentation.injection.scopes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

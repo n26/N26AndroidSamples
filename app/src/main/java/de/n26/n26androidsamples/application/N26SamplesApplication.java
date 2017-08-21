@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples;
+package de.n26.n26androidsamples.application;
 
 import android.app.Application;
 import android.support.annotation.CallSuper;
@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import timber.log.Timber;
 
 public class N26SamplesApplication extends Application {
+
     private ApplicationComponent component;
 
     @Inject
@@ -24,7 +25,7 @@ public class N26SamplesApplication extends Application {
 
     @NonNull
     public ApplicationComponent getComponent() {
-        if(component == null) {
+        if (component == null) {
             component = DaggerApplicationComponent.builder().build();
         }
         return component;

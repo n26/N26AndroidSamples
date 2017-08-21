@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.injection.modules;
+package de.n26.n26androidsamples.application;
 
 import javax.inject.Singleton;
 
@@ -10,7 +10,7 @@ import timber.log.Timber;
  Created by luciapayo on 11/06/2017
  */
 @Module
-public class LoggingModule {
+class LoggingModule {
 
     @Provides
     @Singleton

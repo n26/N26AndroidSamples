@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.injection.modules;
+package de.n26.n26androidsamples.application;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import de.n26.n26androidsamples.base.BuildConfig;
-import de.n26.n26androidsamples.base.injection.modules.InstrumentationModule;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -23,18 +22,18 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = InstrumentationModule.class)
-public final class NetworkModule {
+final class NetworkModule {
 
     private static final String API_URL = "API_URL";
 
     @Qualifier
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface AppInterceptor {
+    @interface AppInterceptor {
     }
 
     @Qualifier
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface NetworkInterceptor {
+    @interface NetworkInterceptor {
     }
 
     @Provides

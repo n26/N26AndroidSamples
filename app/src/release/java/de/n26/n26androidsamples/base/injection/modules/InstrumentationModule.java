@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.injection.modules;
+package de.n26.n26androidsamples.injection.modules;
 
 import java.util.Collections;
 import java.util.Set;

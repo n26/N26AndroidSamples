@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.injection.modules;
+package de.n26.n26androidsamples.base.presentation.injection.modules;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import dagger.Module;
 import dagger.Provides;
-import de.n26.n26androidsamples.injection.qualifiers.ForActivity;
+import de.n26.n26androidsamples.base.presentation.injection.qualifiers.ForActivity;
 
 @Module
 public final class ActivityModule {

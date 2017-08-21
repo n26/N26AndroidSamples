@@ -1,26 +1,26 @@
-package de.n26.n26androidsamples.base.injection.modules;
-
-import android.content.Context;
+package de.n26.n26androidsamples.application;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.readystatesoftware.chuck.ChuckInterceptor;
+
+import android.content.Context;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoSet;
-import de.n26.n26androidsamples.injection.modules.NetworkModule.AppInterceptor;
-import de.n26.n26androidsamples.injection.modules.NetworkModule.NetworkInterceptor;
-import de.n26.n26androidsamples.injection.qualifiers.ForApplication;
+import de.n26.n26androidsamples.application.NetworkModule.AppInterceptor;
+import de.n26.n26androidsamples.application.NetworkModule.NetworkInterceptor;
+import de.n26.n26androidsamples.base.presentation.injection.qualifiers.ForApplication;
 import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
 /**
- * Created by Lucia on 05/08/2017.
+ Created by Lucia on 05/08/2017.
  */
 @Module
-public class InstrumentationModule {
+class InstrumentationModule {
 
     @Provides
     @NetworkInterceptor
@@ -28,7 +28,7 @@ public class InstrumentationModule {
     @Singleton
     static HttpLoggingInterceptor provideLoggingInterceptor() {
         return new HttpLoggingInterceptor(message -> Timber.tag("OkHttp").d(message))
-            .setLevel(HttpLoggingInterceptor.Level.BODY);
+                .setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 
     @Provides

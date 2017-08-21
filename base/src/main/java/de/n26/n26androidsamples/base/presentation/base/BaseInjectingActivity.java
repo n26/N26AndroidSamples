@@ -1,17 +1,14 @@
 package de.n26.n26androidsamples.base.presentation.base;
 
+import android.arch.lifecycle.LifecycleActivity;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import de.n26.n26androidsamples.base.common.preconditions.Preconditions;
 
-/**
- * Created by Lucia on 14/07/2017.
- */
-public abstract class BaseInjectingActivity<Component> extends AppCompatActivity {
+public abstract class BaseInjectingActivity<Component> extends LifecycleActivity {
 
     @Nullable
     private Component component;

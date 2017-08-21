@@ -2,8 +2,8 @@
           package="de.n26.n26androidsamples">
 
     <application
-        android:name=".N26SamplesApplication"
-        android:allowBackup="true"
+        android:name=".application.N26SamplesApplication"
+        android:allowBackup="false"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"

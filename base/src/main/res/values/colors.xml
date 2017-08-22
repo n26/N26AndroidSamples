@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">@color/white</color>
 
     <color name="mainColor_primary_darker">@color/mint</color>

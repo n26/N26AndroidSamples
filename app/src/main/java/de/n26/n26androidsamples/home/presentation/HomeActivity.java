@@ -8,6 +8,7 @@ import de.n26.n26androidsamples.R;
 import de.n26.n26androidsamples.application.N26SamplesApplication;
 import de.n26.n26androidsamples.base.injection.modules.ActivityModule;
 import de.n26.n26androidsamples.base.presentation.BaseInjectingActivity;
+import de.n26.n26androidsamples.credit.presentation.dashboard.CreditDashboardFragment;
 import polanski.option.Option;
 
 public class HomeActivity extends BaseInjectingActivity<HomeActivityComponent> {
@@ -37,5 +38,8 @@ public class HomeActivity extends BaseInjectingActivity<HomeActivityComponent> {
     }
 
     private void showCreditFragment() {
+        getSupportFragmentManager().beginTransaction()
+                                   .add(R.id.frame, new CreditDashboardFragment())
+                                   .commit();
     }
 }

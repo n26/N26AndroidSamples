@@ -14,7 +14,7 @@
         <include
             android:id="@+id/layout_credit_dashboard_empty"
             layout="@layout/partial_credit_dashboard_empty"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:visibility="visible"/>
 
         <android.support.v7.widget.RecyclerView

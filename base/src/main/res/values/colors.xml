@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimaryDark">@color/white</color>
+
+    <color name="mainColor_primary_darker">@color/mint</color>
+    <color name="mainColor_secondary">@color/mint_dark</color>
+    <color name="redColor_primary">@color/red</color>
+    <color name="redColor_secondary">@color/red_light</color>
+    <color name="redColor_crouton">@color/red</color>
+    <color name="active_background">@color/mint_bright</color>
+    <color name="statistics_blue_selected">@color/mint_bright</color>
+    <color name="statistics_red">@color/red</color>
+    <color name="statistics_red_selected">@color/red_light</color>
+
+    <color name="default_item">@color/white</color>
+
+    <color name="colorAccent">@color/mint</color>
+    <color name="colorAccentTransparent">@color/mint_80</color>
+
+    <color name="textColorPrimary">@color/grey_dark</color>
+    <color name="textColorSecondary">@color/grey</color>
+
+    <color name="custom_background_disabled">@color/grey_bright_25p</color>
+
+    <array name="savings_fund">
+        <item>@color/colorAccent</item>
+        <item>@color/mint_dark</item>
+        <item>@color/blue</item>
+        <item>@color/blue_66_e6_ff</item>
+        <item>@color/blue_light</item>
+    </array>
+
+    <color name="white">#ffffff</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_60">#99ffffff</color>
+    <color name="white_cc">#ccffffff</color>
+
+    <!-- Black -->
+    <color name="black_b2">#B2000000</color>
+    <color name="black_10">#16000000</color>
+    <color name="black_1b">#1b1b1b</color>
+    <color name="black_transparent">#99000000</color>
+
+    <!-- Grey -->
+    <color name="grey_33">#333333</color>
+    <color name="grey_46">#464646</color>
+    <color name="grey_78">#787878</color>
+    <color name="grey_79">#797979</color>
+    <color name="grey_90">#909090</color>
+    <color name="grey_4a">#4A4A4A</color>
+    <color name="grey_c9">#C9C9C9</color>
+    <color name="grey_ea">#eaeaea</color>
+    <color name="grey_f3">#f3f3f3</color>
+    <color name="grey_f5">#f5f5f5</color>
+
+    <color name="grey">#797979</color>
+    <color name="grey_50p">#80797979</color>
+    <color name="grey_light">#c9c9c9</color>
+    <color name="grey_dark">#1B1B1B</color>
+    <color name="grey_dark_50p">#801B1B1B</color>
+    <color name="grey_bright">#f3f3f3</color>
+    <color name="grey_bright_10p">#1Af3f3f3</color>
+    <color name="grey_bright_25p">#40f3f3f3</color>
+    <color name="grey_e2">#e2e2e2</color>
+    <color name="grey_f6">#f6f6f6</color>
+    <color name="grey_66">#666666</color>
+
+    <color name="mint">#3BD0D6</color>
+    <color name="mint_80">#803BD0D6</color>
+    <color name="mint_dark">#34b7bc</color>
+    <color name="mint_bright">#D3F5F6</color>
+
+    <color name="blue">#588CF5</color>
+    <color name="blue_10">#1A588CF5</color>
+    <color name="blue_20">#33588CF5</color>
+    <color name="blue_light">#F6F9FE</color>
+    <color name="blue_66_e6_ff">#662E6FF3</color>
+
+    <color name="red">#D74B4B</color>
+    <color name="red_light">#E79393</color>
+
+    <color name="green_bright">#dff9db</color>
+    <color name="green_dark">#167F39</color>
+
 </resources>

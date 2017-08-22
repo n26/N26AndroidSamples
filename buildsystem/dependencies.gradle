@@ -16,6 +16,7 @@ ext {
     dagger2 = '2.11'
     javaxAnnotation = '10.0-b28'
     picasso = '2.5.2'
+    calligraphy = '2.3.0'
     lottie = '2.0.0'
     okHttp = '3.8.0'
     retrofit2 = '2.3.0'
@@ -51,6 +52,8 @@ ext {
             supportCardView        : "com.android.support:cardview-v7:${supportLibrary}",
             supportRecyclerView    : "com.android.support:recyclerview-v7:${supportLibrary}",
             constraintLayout       : "com.android.support.constraint:constraint-layout:${constraintLayout}",
+
+            calligraphy             : "uk.co.chrisjenx:calligraphy:${calligraphy}",
 
             roomRuntime            : "android.arch.persistence.room:runtime:${roomVersion}",
             roomCompiler           : "android.arch.persistence.room:compiler:${roomVersion}",

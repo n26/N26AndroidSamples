@@ -31,8 +31,6 @@
 
         <!-- Miscellaneous -->
         <item name="drawerArrowStyle">@style/Theme.Number26.Drawer</item>
-        <item name="spbStyle">@style/indeterminateProgressBar</item>
-        <item name="statsDropdown">@style/stats_toggle</item>
 
         <item name="android:windowActionModeOverlay">true</item>
         <item name="windowActionModeOverlay">true</item>
@@ -45,10 +43,6 @@
         <item name="buttonBarButtonStyle">@style/Widget.Button.ButtonBar.AlertDialog</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.Button.ButtonBar.AlertDialog.Negative</item>
         <item name="buttonBarNeutralButtonStyle">?buttonBarNegativeButtonStyle</item>
-
-        <item name="textColorError">@color/red</item>
-
-        <item name="textInputLayoutStyle">@style/Theme.Number26.Widget.TextInputLayout</item>
     </style>
 
     <style name="Theme.Number26.ActionBar.MenuItem" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
@@ -62,13 +56,12 @@
     </style>
 
     <style name="Theme.Number26.TextAppearance.ActionBar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="fontPath">@string/font_regular</item>
+        <item name="fontPath">fonts/CalibreApp-Regular.ttf</item>
         <item name="android:textSize">22sp</item>
     </style>
 
     <style name="Theme.Number26.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="fontPath">@string/font_regular</item>
-        <item name="android:fontFamily">@string/font_regular</item>
+        <item name="fontPath">fonts/CalibreApp-Regular.ttf</item>
         <item name="android:textColorPrimary">@color/grey_dark</item>
         <item name="titleTextAppearance">@style/Toolbar.TitleText</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
@@ -86,11 +79,11 @@
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">@dimen/text_big</item>
-        <item name="fontPath">@string/font_regular</item>
+        <item name="fontPath">fonts/CalibreApp-Regular.ttf</item>
     </style>
 
     <style name="Widget.Button.ButtonBar.AlertDialog" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="fontPath">@string/font_regular</item>
+        <item name="fontPath">fonts/CalibreApp-Regular.ttf</item>
         <item name="android:textSize">@dimen/text_normal</item>
         <item name="android:textColor">?colorAccent</item>
     </style>

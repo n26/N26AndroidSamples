@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import de.n26.n26androidsamples.R;
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class N26SamplesApplication extends Application {
 
@@ -20,6 +22,7 @@ public class N26SamplesApplication extends Application {
     public void onCreate() {
         super.onCreate();
         getComponent().inject(this);
+        installFonts();
         initialize();
     }
 
@@ -38,5 +41,12 @@ public class N26SamplesApplication extends Application {
     private void initLogging() {
         Timber.uprootAll();
         Timber.plant(loggingTree);
+    }
+
+    private void installFonts() {
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                                              .setDefaultFontPath("fonts/CalibreApp-Regular.ttf")
+                                              .setFontAttrId(R.attr.fontPath)
+                                              .build());
     }
 }

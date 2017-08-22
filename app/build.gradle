@@ -34,13 +34,16 @@ dependencies {
     implementation project(':credit')
 
     // Dagger 2
-    api commonDependencies.dagger2
+    implementation commonDependencies.dagger2
     annotationProcessor commonDependencies.dagger2Compiler
     testAnnotationProcessor commonDependencies.dagger2Compiler
     compileOnly commonDependencies.javaxAnnotation
 
+    // Calligraphy
+    implementation commonDependencies.calligraphy
+
     // Timber
-    api commonDependencies.timber
+    implementation commonDependencies.timber
 
     // Stetho
     implementation developmentDependencies.stetho

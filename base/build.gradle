@@ -45,6 +45,9 @@ dependencies {
     api commonDependencies.constraintLayout
     api commonDependencies.supportDesign
 
+    // Calligraphy
+    implementation commonDependencies.calligraphy
+
     // Architecture components
     api commonDependencies.archLifecycleRuntime
     api commonDependencies.archLifecycleExtensions

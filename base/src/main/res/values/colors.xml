@@ -23,14 +23,6 @@
 
     <color name="custom_background_disabled">@color/grey_bright_25p</color>
 
-    <array name="savings_fund">
-        <item>@color/colorAccent</item>
-        <item>@color/mint_dark</item>
-        <item>@color/blue</item>
-        <item>@color/blue_66_e6_ff</item>
-        <item>@color/blue_light</item>
-    </array>
-
     <color name="white">#ffffff</color>
     <color name="white_20">#33ffffff</color>
     <color name="white_40">#66ffffff</color>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_credit_dashboard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_f3">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/layout_credit_dashboard_empty"
+            layout="@layout/partial_credit_dashboard_empty"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_credit_dashboard_draft"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:background="@color/grey_f3">
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="88dp"
+               android:src="@drawable/img_credit_and_overdraft"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/credit_dashboard_empty_header_title_overdraft"
+              android:layout_marginTop="8dp"
+              android:textSize="@dimen/text_big"
+              android:textColor="@color/grey_79"/>
+
+</LinearLayout>

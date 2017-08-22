@@ -3,7 +3,7 @@ package de.n26.n26androidsamples.application;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import de.n26.n26androidsamples.base.presentation.injection.modules.ActivityModule;
+import de.n26.n26androidsamples.base.injection.modules.ActivityModule;
 import de.n26.n26androidsamples.home.presentation.HomeActivityComponent;
 
 @Singleton

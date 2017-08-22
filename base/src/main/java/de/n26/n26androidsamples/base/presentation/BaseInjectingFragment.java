@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.presentation.base;
+package de.n26.n26androidsamples.base.presentation;
 
 import android.arch.lifecycle.LifecycleFragment;
 import android.content.Context;
@@ -9,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Lucia on 11/07/2017.
- */
 public abstract class BaseInjectingFragment extends LifecycleFragment {
 
     @Override

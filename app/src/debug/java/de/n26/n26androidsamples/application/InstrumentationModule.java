@@ -12,13 +12,10 @@ import dagger.Provides;
 import dagger.multibindings.IntoSet;
 import de.n26.n26androidsamples.application.NetworkModule.AppInterceptor;
 import de.n26.n26androidsamples.application.NetworkModule.NetworkInterceptor;
-import de.n26.n26androidsamples.base.presentation.injection.qualifiers.ForApplication;
+import de.n26.n26androidsamples.base.injection.qualifiers.ForApplication;
 import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
-/**
- Created by Lucia on 05/08/2017.
- */
 @Module
 class InstrumentationModule {
 

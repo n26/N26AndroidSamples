@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 
 import de.n26.n26androidsamples.R;
 import de.n26.n26androidsamples.application.N26SamplesApplication;
-import de.n26.n26androidsamples.base.presentation.base.BaseInjectingActivity;
-import de.n26.n26androidsamples.base.presentation.injection.modules.ActivityModule;
+import de.n26.n26androidsamples.base.injection.modules.ActivityModule;
+import de.n26.n26androidsamples.base.presentation.BaseInjectingActivity;
 import polanski.option.Option;
 
 public class HomeActivity extends BaseInjectingActivity<HomeActivityComponent> {

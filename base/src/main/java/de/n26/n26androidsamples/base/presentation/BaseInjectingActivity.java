@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.presentation.base;
+package de.n26.n26androidsamples.base.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

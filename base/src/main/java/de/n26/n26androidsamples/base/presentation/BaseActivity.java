@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.presentation.base;
+package de.n26.n26androidsamples.base.presentation;
 
 import android.arch.lifecycle.LifecycleActivity;
 import android.content.Context;

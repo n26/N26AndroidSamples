@@ -66,6 +66,7 @@
         <item name="titleTextAppearance">@style/Toolbar.TitleText</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:elevation">4dp</item>
     </style>
 
     <style name="Theme.Number26.Drawer" parent="Widget.AppCompat.DrawerArrowToggle">

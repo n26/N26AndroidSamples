@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="creditDashboardCardFrame">
+        <item name="android:layout_height">218dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="creditDashboardCardTitleFrame">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="creditTextCardContentLight">
+        <item name="fontPath">fonts/CalibreApp-Light.ttf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grey_79</item>
+    </style>
+
+</resources>

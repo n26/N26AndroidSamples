@@ -1,3 +1,7 @@
 <resources>
     <string name="credit_dashboard_empty_header_title_overdraft">Credit</string>
+    <string name="credit_dashboard_repayment_paid_out">"Paid out on {{date}}"</string>
+    <string name="credit_dashboard_repayment_total_repaid">"Total repaid"</string>
+    <string name="credit_dashboard_repayment_payment_first">"First payment"</string>
+    <string name="credit_dashboard_repayment_payment_next">"Next payment"</string>
 </resources>

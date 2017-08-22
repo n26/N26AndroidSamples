@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="4dp">
+
+    <LinearLayout android:orientation="vertical"
+                  style="@style/creditDashboardCardFrame">
+
+        <LinearLayout android:orientation="horizontal"
+                      style="@style/creditDashboardCardTitleFrame">
+
+            <TextView
+                android:id="@+id/text_in_repayment_card_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="PURPOSE"
+                android:layout_weight="1"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/text_big"/>
+
+            <TextView
+                android:id="@+id/text_in_repayment_card_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="€5.000,00"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/text_big"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_in_repayment_card_paid_out_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
+            tools:text="@string/credit_dashboard_repayment_paid_out"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/credit_dashboard_repayment_total_repaid"
+            android:textColor="@color/grey_dark"
+            android:textSize="@dimen/text_big"/>
+
+        <TextView
+            android:id="@+id/text_in_repayment_card_total_repaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/mint"
+            android:textSize="36sp"
+            tools:text="€0.00"/>
+
+        <TextView
+            android:id="@+id/text_in_repayment_card_next_payment_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
+            tools:text="@string/credit_dashboard_repayment_payment_first"/>
+
+        <TextView
+            android:id="@+id/text_in_repayment_card_next_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_dark"
+            android:textSize="@dimen/text_big"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            tools:text="€332,50 on March 1st"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

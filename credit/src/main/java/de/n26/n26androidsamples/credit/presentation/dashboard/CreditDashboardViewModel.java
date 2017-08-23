@@ -52,7 +52,7 @@ public class CreditDashboardViewModel extends ViewModel {
     }
 
     @NonNull
-    public LiveData<List<DisplayableItem>> getDisplayableItemListLiveData() {
+    LiveData<List<DisplayableItem>> getDisplayableItemListLiveData() {
         return displayableItemListLiveData;
     }
 

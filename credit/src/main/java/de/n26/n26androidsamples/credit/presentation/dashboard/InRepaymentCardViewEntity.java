@@ -29,7 +29,7 @@ abstract class InRepaymentCardViewEntity {
     abstract String formattedNextPayment();
 
     static Builder builder() {
-        return new AutoValue_InRepaymentCardViewModel.Builder();
+        return new AutoValue_InRepaymentCardViewEntity.Builder();
     }
 
     @AutoValue.Builder

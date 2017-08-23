@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import de.n26.n26androidsamples.base.injection.qualifiers.ForActivity;
 import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ViewHolderBinder;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ViewHolderFactory;
@@ -44,7 +47,8 @@ class InRepaymentCardViewHolder extends RecyclerView.ViewHolder {
 
     static class InRepaymentCardHolderFactory extends ViewHolderFactory {
 
-        InRepaymentCardHolderFactory(@NonNull final Context context) {
+        @Inject
+        InRepaymentCardHolderFactory(@NonNull @ForActivity final Context context) {
             super(context);
         }
 
@@ -57,6 +61,9 @@ class InRepaymentCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     static class InRepaymentCardHolderBinder implements ViewHolderBinder {
+
+        @Inject
+        InRepaymentCardHolderBinder() {}
 
         @Override
         public void bind(@NonNull final RecyclerView.ViewHolder viewHolder, @NonNull final DisplayableItem item) {

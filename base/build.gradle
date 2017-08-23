@@ -51,6 +51,7 @@ dependencies {
     // Architecture components
     api commonDependencies.archLifecycleRuntime
     api commonDependencies.archLifecycleExtensions
+    api commonDependencies.archLifecycleReactiveStreams
     annotationProcessor commonDependencies.archLifecycleCompiler
     testAnnotationProcessor commonDependencies.archLifecycleCompiler
 

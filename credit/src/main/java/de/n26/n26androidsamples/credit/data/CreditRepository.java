@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import de.n26.n26androidsamples.base.data.store.ReactiveStore;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 import polanski.option.Option;
 
 @Singleton
@@ -38,6 +39,7 @@ public class CreditRepository {
         return creditService.getDraftSummaryList()
                             .map(CreditDraftSummaryMapper::processList)
                             .doOnSuccess(store::replaceAll)
-                            .toCompletable();
+                            .toCompletable()
+                            .subscribeOn(Schedulers.computation());
     }
 }

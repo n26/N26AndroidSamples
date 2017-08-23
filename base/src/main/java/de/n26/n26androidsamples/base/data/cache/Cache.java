@@ -91,7 +91,8 @@ public class Cache<Key, Value> implements MemoryStore<Key, Value> {
     @Override
     @NonNull
     public Maybe<List<Value>> getAll() {
-        androidPreconditions.assertWorkerThread();
+        //FIXME
+        //        androidPreconditions.assertWorkerThread();
 
         return Observable.fromIterable(cache.values())
                          .map(CacheEntry::cachedObject)

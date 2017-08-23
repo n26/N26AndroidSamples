@@ -11,7 +11,7 @@ import javax.inject.Inject;
 public final class TimeUtils {
 
     @Inject
-    public TimeUtils() { }
+    TimeUtils() { }
 
     /**
      Formats the passed ISO 8601 formatted date string to a date string following the passed format pattern.

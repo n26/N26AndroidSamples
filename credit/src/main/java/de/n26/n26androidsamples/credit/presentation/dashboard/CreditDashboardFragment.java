@@ -1,5 +1,6 @@
 package de.n26.n26androidsamples.credit.presentation.dashboard;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import de.n26.n26androidsamples.credit.presentation.dashboard.CreditDashboardCom
 public class CreditDashboardFragment extends BaseInjectingFragment {
 
     @Inject RecyclerViewAdapter adapter;
+    @Inject ViewModelProvider.Factory viewModelFactory;
 
     private RecyclerView draftSummaryList;
     private View emptyDashboardLayout;
@@ -36,7 +38,7 @@ public class CreditDashboardFragment extends BaseInjectingFragment {
     @Override
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final CreditDashboardViewModel viewModel = ViewModelProviders.of(this).get(CreditDashboardViewModel.class);
+        final CreditDashboardViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreditDashboardViewModel.class);
         viewModel.getDisplayableItemListLiveData().observe(this, this::updateListView);
     }
 

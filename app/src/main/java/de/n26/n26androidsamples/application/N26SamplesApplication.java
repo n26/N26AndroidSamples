@@ -29,7 +29,7 @@ public class N26SamplesApplication extends Application {
     @NonNull
     public ApplicationComponent getComponent() {
         if (component == null) {
-            component = DaggerApplicationComponent.builder().build();
+            component = DaggerApplicationComponent.builder().application(this).build();
         }
         return component;
     }

@@ -1,27 +1,35 @@
 package de.n26.n26androidsamples.credit.presentation.dashboard;
 
-import android.content.Context;
+import android.arch.lifecycle.ViewModelProvider;
 
 import java.util.Map;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntKey;
 import dagger.multibindings.IntoMap;
 import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
-import de.n26.n26androidsamples.base.injection.qualifiers.ForActivity;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ItemComparator;
 import de.n26.n26androidsamples.base.presentation.recyclerview.RecyclerViewAdapter;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ViewHolderBinder;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ViewHolderFactory;
+import de.n26.n26androidsamples.base.presentation.utils.ViewModelUtil;
+import de.n26.n26androidsamples.credit.presentation.dashboard.InRepaymentCardViewHolder.InRepaymentCardHolderBinder;
+import de.n26.n26androidsamples.credit.presentation.dashboard.InRepaymentCardViewHolder.InRepaymentCardHolderFactory;
 
 import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPresentationConstants.DisplayableTypes.IN_REPAYMENT;
 
 @Module
-public final class CreditDashboardModule {
+public abstract class CreditDashboardModule {
 
     @Provides
-    RecyclerViewAdapter provideRecyclerAdapter(ItemComparator itemComparator,
+    static ViewModelProvider.Factory provideViewModelProviderFactory(ViewModelUtil viewModelUtil, CreditDashboardViewModel viewModel) {
+        return viewModelUtil.createFor(viewModel);
+    }
+
+    @Provides
+    static RecyclerViewAdapter provideRecyclerAdapter(ItemComparator itemComparator,
                                                Map<Integer, ViewHolderFactory> factoryMap,
                                                Map<Integer, ViewHolderBinder> binderMap,
                                                AndroidPreconditions androidPreconditions) {
@@ -29,21 +37,17 @@ public final class CreditDashboardModule {
     }
 
     @Provides
-    ItemComparator provideComparator() {
+    static ItemComparator provideComparator() {
         return new CreditDashboardItemComparator();
     }
 
+    @Binds
     @IntoMap
     @IntKey(IN_REPAYMENT)
-    @Provides
-    ViewHolderFactory provideInRepaymentCardViewHolderFactory(@ForActivity Context context) {
-        return new InRepaymentCardViewHolder.InRepaymentCardHolderFactory(context);
-    }
+    abstract ViewHolderFactory provideInRepaymentCardViewHolderFactory(InRepaymentCardHolderFactory factory);
 
+    @Binds
     @IntoMap
     @IntKey(IN_REPAYMENT)
-    @Provides
-    ViewHolderBinder provideInRepaymentCardViewHolderBinder() {
-        return new InRepaymentCardViewHolder.InRepaymentCardHolderBinder();
-    }
+    abstract ViewHolderBinder provideInRepaymentCardViewHolderBinder(InRepaymentCardHolderBinder binder);
 }

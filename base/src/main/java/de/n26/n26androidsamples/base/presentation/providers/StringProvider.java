@@ -22,7 +22,7 @@ public class StringProvider {
     private final StringUtils stringUtils;
 
     @Inject
-    public StringProvider(@NonNull @ForApplication final Context context, @NonNull final StringUtils stringUtils) {
+    StringProvider(@NonNull @ForApplication final Context context, @NonNull final StringUtils stringUtils) {
         this.context = context;
         this.stringUtils = stringUtils;
     }

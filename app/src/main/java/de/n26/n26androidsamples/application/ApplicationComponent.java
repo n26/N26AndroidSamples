@@ -2,12 +2,13 @@ package de.n26.n26androidsamples.application;
 
 import javax.inject.Singleton;
 
+import dagger.BindsInstance;
 import dagger.Component;
 import de.n26.n26androidsamples.base.injection.modules.ActivityModule;
 import de.n26.n26androidsamples.home.presentation.HomeActivityComponent;
 
 @Singleton
-@Component(modules = {NetworkModule.class, LoggingModule.class, DataModule.class})
+@Component(modules = {ApplicationModule.class, NetworkModule.class, LoggingModule.class, DataModule.class})
 public interface ApplicationComponent {
 
     void inject(N26SamplesApplication app);
@@ -16,6 +17,9 @@ public interface ApplicationComponent {
 
     @Component.Builder
     interface Builder {
+
+        @BindsInstance
+        Builder application(N26SamplesApplication app);
 
         ApplicationComponent build();
     }

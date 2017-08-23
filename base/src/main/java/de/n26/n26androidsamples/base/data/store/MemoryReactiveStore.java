@@ -86,7 +86,8 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
 
     @NonNull
     public Flowable<Option<List<Value>>> getAllBehaviorStream() {
-        androidPreconditions.assertWorkerThread();
+        //FIXME
+        //        androidPreconditions.assertWorkerThread();
 
         final Option<List<Value>> allValues = cache.getAll().map(Option::ofObj).blockingGet(none());
         return allProcessor.startWith(allValues);

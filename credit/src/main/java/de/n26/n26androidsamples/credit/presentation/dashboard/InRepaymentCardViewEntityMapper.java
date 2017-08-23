@@ -42,7 +42,7 @@ class InRepaymentCardViewEntityMapper implements Function<CreditDraftSummary, In
     }
 
     @NonNull
-    public InRepaymentCardViewEntity apply(@NonNull final CreditDraftSummary draft) {
+    public InRepaymentCardViewEntity apply(@NonNull final CreditDraftSummary draft) throws Exception {
         assertCorrectStatus(draft.status());
 
         final CreditRepaymentInfo repaymentInfo = orThrowUnsafe(draft.creditRepaymentInfo(),

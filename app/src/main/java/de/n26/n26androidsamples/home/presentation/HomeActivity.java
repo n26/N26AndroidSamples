@@ -33,7 +33,7 @@ public class HomeActivity extends BaseInjectingActivity<HomeActivityComponent> {
     @Override
     protected HomeActivityComponent createComponent() {
         N26SamplesApplication app = N26SamplesApplication.class.cast(getApplication());
-        ActivityModule activityModule = new ActivityModule();
+        ActivityModule activityModule = new ActivityModule(this);
         return app.getComponent().createHomeActivityComponent(activityModule);
     }
 

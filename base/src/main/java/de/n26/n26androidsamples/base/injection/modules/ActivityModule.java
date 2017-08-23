@@ -1,5 +1,6 @@
 package de.n26.n26androidsamples.base.injection.modules;
 
+import android.arch.lifecycle.LifecycleActivity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +13,16 @@ import de.n26.n26androidsamples.base.injection.qualifiers.ForActivity;
 @Module
 public final class ActivityModule {
 
+    @NonNull
+    private final LifecycleActivity activity;
+
+    public ActivityModule(@NonNull final LifecycleActivity activity) {
+        this.activity = activity;
+    }
+
     @ForActivity
     @Provides
-    Context provideContext(@NonNull final AppCompatActivity activity) {
+    Context provideContext() {
         return activity;
     }
 

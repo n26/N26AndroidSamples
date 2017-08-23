@@ -32,6 +32,12 @@ dependencies {
 
     implementation project(':base')
 
+    // Dagger 2
+    implementation commonDependencies.dagger2
+    annotationProcessor commonDependencies.dagger2Compiler
+    testAnnotationProcessor commonDependencies.dagger2Compiler
+    compileOnly commonDependencies.javaxAnnotation
+
     // Auto-Value
     compileOnly commonDependencies.autoValue
     annotationProcessor commonDependencies.autoValue
@@ -41,7 +47,6 @@ dependencies {
     // AutoValue Type Adapter
     compileOnly commonDependencies.autoValueGson
     annotationProcessor commonDependencies.autoValueGson
-
 
     // Unit testing
     testImplementation commonTestDependencies.junit

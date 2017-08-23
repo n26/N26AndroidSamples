@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.data.common.store;
+package de.n26.n26androidsamples.base.data.store;
 
 import android.support.annotation.NonNull;
 

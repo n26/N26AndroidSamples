@@ -33,13 +33,13 @@ class InRepaymentCardViewHolder extends RecyclerView.ViewHolder {
         nextPayment = itemView.findViewById(R.id.text_in_repayment_card_next_payment);
     }
 
-    private void bind(@NonNull final InRepaymentCardViewModel viewModel) {
-        title.setText(viewModel.title());
-        amount.setText(viewModel.formattedAmount());
-        paidOutDate.setText(viewModel.formattedPaidOutDate());
-        totalRepaid.setText(viewModel.formattedTotalRepaid());
-        nextPaymentLabel.setText(viewModel.nextPaymentLabel());
-        nextPayment.setText(viewModel.formattedNextPayment());
+    private void bind(@NonNull final InRepaymentCardViewEntity viewEntity) {
+        title.setText(viewEntity.title());
+        amount.setText(viewEntity.formattedAmount());
+        paidOutDate.setText(viewEntity.formattedPaidOutDate());
+        totalRepaid.setText(viewEntity.formattedTotalRepaid());
+        nextPaymentLabel.setText(viewEntity.nextPaymentLabel());
+        nextPayment.setText(viewEntity.formattedNextPayment());
     }
 
     static class InRepaymentCardHolderFactory extends ViewHolderFactory {
@@ -61,8 +61,8 @@ class InRepaymentCardViewHolder extends RecyclerView.ViewHolder {
         @Override
         public void bind(@NonNull final RecyclerView.ViewHolder viewHolder, @NonNull final DisplayableItem item) {
             InRepaymentCardViewHolder castedViewHolder = InRepaymentCardViewHolder.class.cast(viewHolder);
-            InRepaymentCardViewModel viewModel = InRepaymentCardViewModel.class.cast(item.model());
-            castedViewHolder.bind(viewModel);
+            InRepaymentCardViewEntity viewEntity = InRepaymentCardViewEntity.class.cast(item.model());
+            castedViewHolder.bind(viewEntity);
         }
     }
 }

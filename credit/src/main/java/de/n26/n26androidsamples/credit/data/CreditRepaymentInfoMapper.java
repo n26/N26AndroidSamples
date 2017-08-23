@@ -3,7 +3,7 @@ package de.n26.n26androidsamples.credit.data;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import de.n26.n26androidsamples.base.data.common.EssentialParamMissingException;
+import de.n26.n26androidsamples.base.data.EssentialParamMissingException;
 
 final class CreditRepaymentInfoMapper {
 

@@ -1,8 +1,8 @@
-package de.n26.n26androidsamples.base.data.common.cache;
-
-import android.support.annotation.NonNull;
+package de.n26.n26androidsamples.base.data.cache;
 
 import com.google.auto.value.AutoValue;
+
+import android.support.annotation.NonNull;
 
 /**
  * Cache entry that contains the object and the creation timestamp.

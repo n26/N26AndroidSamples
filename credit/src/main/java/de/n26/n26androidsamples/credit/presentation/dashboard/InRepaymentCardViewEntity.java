@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 import android.support.annotation.NonNull;
 
 @AutoValue
-abstract class InRepaymentCardViewModel {
+abstract class InRepaymentCardViewEntity {
 
     @NonNull
     abstract String id();
@@ -49,6 +49,6 @@ abstract class InRepaymentCardViewModel {
 
         Builder formattedNextPayment(String formattedNextPayment);
 
-        InRepaymentCardViewModel build();
+        InRepaymentCardViewEntity build();
     }
 }

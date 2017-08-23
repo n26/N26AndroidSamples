@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base.data.common.cache;
+package de.n26.n26androidsamples.base.data.cache;
 
 import android.support.annotation.NonNull;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
 import de.n26.n26androidsamples.base.common.providers.TimestampProvider;
 import de.n26.n26androidsamples.base.common.utils.ListUtils;
-import de.n26.n26androidsamples.base.data.common.store.Store.MemoryStore;
+import de.n26.n26androidsamples.base.data.store.Store.MemoryStore;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import polanski.option.Option;

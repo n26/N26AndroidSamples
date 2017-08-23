@@ -10,10 +10,10 @@ import dagger.Provides;
 import dagger.multibindings.IntoSet;
 import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
 import de.n26.n26androidsamples.base.common.providers.TimestampProvider;
-import de.n26.n26androidsamples.base.data.common.cache.Cache;
-import de.n26.n26androidsamples.base.data.common.store.MemoryReactiveStore;
-import de.n26.n26androidsamples.base.data.common.store.ReactiveStore;
-import de.n26.n26androidsamples.base.data.common.store.Store;
+import de.n26.n26androidsamples.base.data.cache.Cache;
+import de.n26.n26androidsamples.base.data.store.MemoryReactiveStore;
+import de.n26.n26androidsamples.base.data.store.ReactiveStore;
+import de.n26.n26androidsamples.base.data.store.Store;
 
 @Module
 public class CreditDataModule {

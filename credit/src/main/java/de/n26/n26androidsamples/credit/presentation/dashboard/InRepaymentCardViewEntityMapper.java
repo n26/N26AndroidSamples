@@ -12,15 +12,16 @@ import de.n26.n26androidsamples.credit.R;
 import de.n26.n26androidsamples.credit.data.CreditDraftSummary;
 import de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus;
 import de.n26.n26androidsamples.credit.data.CreditRepaymentInfo;
+import io.reactivex.functions.Function;
 
 import static de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus.IN_REPAYMENT;
 import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPresentationConstants.DateFormats.DASHBOARD_DATE_FORMAT_NEXT_PAYMENT;
 import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPresentationConstants.DateFormats.DASHBOARD_DATE_FORMAT_PAID_OUT;
 import static polanski.option.OptionUnsafe.orThrowUnsafe;
 
-class InRepaymentCardViewModelMapper {
+class InRepaymentCardViewEntityMapper implements Function<CreditDraftSummary, InRepaymentCardViewEntity> {
 
-    private static final String TAG = InRepaymentCardViewModelMapper.class.getSimpleName();
+    private static final String TAG = InRepaymentCardViewEntityMapper.class.getSimpleName();
 
     @NonNull
     private final StringProvider stringProvider;
@@ -32,29 +33,29 @@ class InRepaymentCardViewModelMapper {
     private final CurrencyUtils currencyUtils;
 
     @Inject
-    InRepaymentCardViewModelMapper(@NonNull final StringProvider stringProvider,
-                                   @NonNull final TimeUtils timeUtils,
-                                   @NonNull final CurrencyUtils currencyUtils) {
+    InRepaymentCardViewEntityMapper(@NonNull final StringProvider stringProvider,
+                                    @NonNull final TimeUtils timeUtils,
+                                    @NonNull final CurrencyUtils currencyUtils) {
         this.stringProvider = stringProvider;
         this.timeUtils = timeUtils;
         this.currencyUtils = currencyUtils;
     }
 
     @NonNull
-    InRepaymentCardViewModel map(@NonNull final CreditDraftSummary draft) {
+    public InRepaymentCardViewEntity apply(@NonNull final CreditDraftSummary draft) {
         assertCorrectStatus(draft.status());
 
         final CreditRepaymentInfo repaymentInfo = orThrowUnsafe(draft.creditRepaymentInfo(),
                                                                 new IllegalStateException(TAG + ": RepaymentInformation missing."));
-        return InRepaymentCardViewModel.builder()
-                                       .id(draft.id())
-                                       .title(draft.purpose())
-                                       .formattedAmount(currencyUtils.formatAmount(draft.amount()))
-                                       .nextPaymentLabel(mapToNextPaymentLabel(repaymentInfo.totalPaid()))
-                                       .formattedPaidOutDate(mapToFormattedPaidOutDate(repaymentInfo.disbursedDate()))
-                                       .formattedTotalRepaid(currencyUtils.formatAmount(repaymentInfo.totalPaid()))
-                                       .formattedNextPayment(mapToNextPaymentInfo(repaymentInfo.nextPayment(), repaymentInfo.nextPaymentDate()))
-                                       .build();
+        return InRepaymentCardViewEntity.builder()
+                                        .id(draft.id())
+                                        .title(draft.purpose())
+                                        .formattedAmount(currencyUtils.formatAmount(draft.amount()))
+                                        .nextPaymentLabel(mapToNextPaymentLabel(repaymentInfo.totalPaid()))
+                                        .formattedPaidOutDate(mapToFormattedPaidOutDate(repaymentInfo.disbursedDate()))
+                                        .formattedTotalRepaid(currencyUtils.formatAmount(repaymentInfo.totalPaid()))
+                                        .formattedNextPayment(mapToNextPaymentInfo(repaymentInfo.nextPayment(), repaymentInfo.nextPaymentDate()))
+                                        .build();
 
     }
 

@@ -22,12 +22,12 @@ import polanski.option.Option;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class GetCreditDraftSummaryListTest extends BaseTest {
+public class RetrieveCreditDraftSummaryListTest extends BaseTest {
 
     @Mock
     private CreditRepository creditRepository;
 
-    private GetCreditDraftSummaryList interactor;
+    private RetrieveCreditDraftSummaryList interactor;
 
     private ArrangeBuilder arrangeBuilder;
 
@@ -35,7 +35,7 @@ public class GetCreditDraftSummaryListTest extends BaseTest {
 
     @Before
     public void setUp() {
-        interactor = new GetCreditDraftSummaryList(creditRepository);
+        interactor = new RetrieveCreditDraftSummaryList(creditRepository);
         arrangeBuilder = new ArrangeBuilder();
         ts = new TestSubscriber<>();
     }

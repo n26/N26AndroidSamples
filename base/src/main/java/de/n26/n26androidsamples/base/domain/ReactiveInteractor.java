@@ -13,29 +13,32 @@ import polanski.option.Option;
 public interface ReactiveInteractor {
 
     /**
-     The push interactor is used to push some changes made in presentation layer to data layer. The response for the push operation comes as onNext
-     event in the returned observable.
+     Sends changes to data layer.
+     It returns a {@link Single} that will emit the result of the send operation.
 
-     @param <Response> the type of the push response.
-     @param <Params>   required parameters for the push.
+     @param <Result> the type of the send operation result.
+     @param <Params> required parameters for the send.
      */
-    interface PushInteractor<Params, Response> extends ReactiveInteractor {
+    interface SendInteractor<Params, Result> extends ReactiveInteractor {
 
         @NonNull
-        Single<Response> getPushSingle(@NonNull final Option<Params> params);
+        Single<Result> getSingle(
+                @NonNull final Option<Params> params);
     }
 
     /**
-     The get interactor is used to get infinite number of updates for the specified type of data. This stream will never complete but it can error if
-     there is any problems performing the required actions to serve the data.
+     Retrieves changes from the data layer.
+     It returns an {@link Flowable} that emits updates for the retrieved object. The returned {@link Flowable} will never complete, but it can
+     error if there are any problems performing the required actions to serve the data.
 
-     @param <Result> the type of the returned data.
-     @param <Params> required parameters for the get.
+     @param <Object> the type of the retrieved object.
+     @param <Params> required parameters for the retrieve operation.
      */
-    interface GetInteractor<Params, Result> extends ReactiveInteractor {
+    interface RetrieveInteractor<Params, Object> extends ReactiveInteractor {
 
         @NonNull
-        Flowable<Result> getBehaviorStream(@NonNull final Option<Params> params);
+        Flowable<Object> getBehaviorStream(
+                @NonNull final Option<Params> params);
     }
 
     /**
@@ -47,20 +50,20 @@ public interface ReactiveInteractor {
     interface RequestInteractor<Params, Result> extends ReactiveInteractor {
 
         @NonNull
-        Single<Result> getRequestSingle(@NonNull final Option<Params> params);
+        Single<Result> getSingle(@NonNull final Option<Params> params);
     }
 
     /**
      The delete interactor is used to delete entities from data layer. The response for the delete operation comes as onNext
      event in the returned observable.
 
-     @param <Response> the type of the delete response.
+     @param <Result> the type of the delete response.
      @param <Params>   required parameters for the delete.
      */
-    interface DeleteInteractor<Params, Response> extends ReactiveInteractor {
+    interface DeleteInteractor<Params, Result> extends ReactiveInteractor {
 
         @NonNull
-        Single<Response> getDeleteSingle(@NonNull final Option<Params> params);
+        Single<Result> getSingle(@NonNull final Option<Params> params);
     }
 
     /**

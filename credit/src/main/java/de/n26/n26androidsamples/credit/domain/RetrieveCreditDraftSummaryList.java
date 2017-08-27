@@ -7,20 +7,20 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.n26.n26androidsamples.base.common.rx.UnwrapOptionTransformer;
-import de.n26.n26androidsamples.base.domain.ReactiveInteractor.GetInteractor;
+import de.n26.n26androidsamples.base.domain.ReactiveInteractor.RetrieveInteractor;
 import de.n26.n26androidsamples.credit.data.CreditDraftSummary;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import polanski.option.Option;
 
-public class GetCreditDraftSummaryList implements GetInteractor<Void, List<CreditDraftSummary>> {
+public class RetrieveCreditDraftSummaryList implements RetrieveInteractor<Void, List<CreditDraftSummary>> {
 
     @NonNull
     private final CreditRepository creditRepository;
 
     @Inject
-    GetCreditDraftSummaryList(@NonNull final CreditRepository creditRepository) {
+    RetrieveCreditDraftSummaryList(@NonNull final CreditRepository creditRepository) {
         this.creditRepository = creditRepository;
     }
 

@@ -1,14 +1,14 @@
 package de.n26.n26androidsamples.credit.data;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 @AutoValue
-public abstract class CreditDraftSummaryRaw {
+public abstract class CreditDraftRaw {
 
     @Nullable
     abstract String id();
@@ -35,13 +35,13 @@ public abstract class CreditDraftSummaryRaw {
     abstract CreditRepaymentInfoRaw repaymentInfo();
 
     @NonNull
-    public static TypeAdapter<CreditDraftSummaryRaw> typeAdapter(@NonNull final Gson gson) {
-        return new AutoValue_CreditDraftSummaryRaw.GsonTypeAdapter(gson);
+    public static TypeAdapter<CreditDraftRaw> typeAdapter(@NonNull final Gson gson) {
+        return new AutoValue_CreditDraftRaw.GsonTypeAdapter(gson);
     }
 
     @NonNull
     public static Builder builder() {
-        return new AutoValue_CreditDraftSummaryRaw.Builder();
+        return new AutoValue_CreditDraftRaw.Builder();
     }
 
     @AutoValue.Builder
@@ -65,6 +65,6 @@ public abstract class CreditDraftSummaryRaw {
 
         Builder repaymentInfo(final CreditRepaymentInfoRaw repaymentInfo);
 
-        CreditDraftSummaryRaw build();
+        CreditDraftRaw build();
     }
 }

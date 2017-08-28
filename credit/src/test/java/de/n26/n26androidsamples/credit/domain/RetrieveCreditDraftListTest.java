@@ -1,18 +1,18 @@
 package de.n26.n26androidsamples.credit.domain;
 
-import android.support.annotation.NonNull;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.n26.n26androidsamples.credit.BaseTest;
 import de.n26.n26androidsamples.credit.data.CreditDataTestUtils;
-import de.n26.n26androidsamples.credit.data.CreditDraftSummary;
+import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
 import io.reactivex.Completable;
 import io.reactivex.processors.BehaviorProcessor;
@@ -22,7 +22,7 @@ import polanski.option.Option;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RetrieveCreditDraftSummaryListTest extends BaseTest {
+public class RetrieveCreditDraftListTest extends BaseTest {
 
     @Mock
     private CreditRepository creditRepository;
@@ -31,7 +31,7 @@ public class RetrieveCreditDraftSummaryListTest extends BaseTest {
 
     private ArrangeBuilder arrangeBuilder;
 
-    private TestSubscriber<List<CreditDraftSummary>> ts;
+    private TestSubscriber<List<CreditDraft>> ts;
 
     @Before
     public void setUp() {
@@ -43,11 +43,11 @@ public class RetrieveCreditDraftSummaryListTest extends BaseTest {
     @Test
     public void draftsFromRepoAreUnwrappedAndPassedOn() {
         // Arrange
-        List<CreditDraftSummary> testDraftList = createTestDraftList();
+        List<CreditDraft> testDraftList = createTestDraftList();
         interactor.getBehaviorStream(Option.none()).subscribe(ts);
 
         // Act
-        arrangeBuilder.emitDraftSummaryListFromRepo(Option.ofObj(testDraftList));
+        arrangeBuilder.emitDraftListFromRepo(Option.ofObj(testDraftList));
 
         // Assert
         ts.assertNoErrors();
@@ -57,14 +57,14 @@ public class RetrieveCreditDraftSummaryListTest extends BaseTest {
     @Test
     public void whenRepoIsEmptyFetchAndNoEmissions() {
         // Arrange
-        arrangeBuilder.emitDraftSummaryListFromRepo(Option.none())
+        arrangeBuilder.emitDraftListFromRepo(Option.none())
                       .withSuccessfulFetch();
 
         // Act
         interactor.getBehaviorStream(Option.none()).subscribe(ts);
 
         // Assert
-        verify(creditRepository).fetchCreditDraftSummariesSingle();
+        verify(creditRepository).fetchCreditDrafts();
         ts.assertNoValues();
         ts.assertNoErrors();
     }
@@ -73,46 +73,46 @@ public class RetrieveCreditDraftSummaryListTest extends BaseTest {
     public void propagateFetchError() {
         // Arrange
         Throwable throwable = Mockito.mock(Throwable.class);
-        arrangeBuilder.emitDraftSummaryListFromRepo(Option.none())
+        arrangeBuilder.emitDraftListFromRepo(Option.none())
                       .withFetchError(throwable);
 
         // Act
         interactor.getBehaviorStream(Option.none()).subscribe(ts);
 
         // Assert
-        verify(creditRepository).fetchCreditDraftSummariesSingle();
+        verify(creditRepository).fetchCreditDrafts();
         ts.assertNoValues();
         ts.assertError(throwable);
     }
 
-    private List<CreditDraftSummary> createTestDraftList() {
-        return new ArrayList<CreditDraftSummary>() {{
-            add(CreditDataTestUtils.creditDraftSummaryTestBuilder().id("1").build());
-            add(CreditDataTestUtils.creditDraftSummaryTestBuilder().id("2").build());
-            add(CreditDataTestUtils.creditDraftSummaryTestBuilder().id("3").build());
+    private List<CreditDraft> createTestDraftList() {
+        return new ArrayList<CreditDraft>() {{
+            add(CreditDataTestUtils.creditDraftTestBuilder().id("1").build());
+            add(CreditDataTestUtils.creditDraftTestBuilder().id("2").build());
+            add(CreditDataTestUtils.creditDraftTestBuilder().id("3").build());
         }};
     }
 
     private class ArrangeBuilder {
 
-        private BehaviorProcessor<Option<List<CreditDraftSummary>>> repoDraftStream = BehaviorProcessor.create();
+        private BehaviorProcessor<Option<List<CreditDraft>>> repoCreditDraftStream = BehaviorProcessor.create();
 
         private ArrangeBuilder() {
-            when(creditRepository.getCreditDraftSummaryListBehaviorStream()).thenReturn(repoDraftStream);
+            when(creditRepository.getAllCreditDrafts()).thenReturn(repoCreditDraftStream);
         }
 
-        private ArrangeBuilder emitDraftSummaryListFromRepo(@NonNull final Option<List<CreditDraftSummary>> listOption) {
-            repoDraftStream.onNext(listOption);
+        private ArrangeBuilder emitDraftListFromRepo(@NonNull final Option<List<CreditDraft>> listOption) {
+            repoCreditDraftStream.onNext(listOption);
             return this;
         }
 
         private ArrangeBuilder withSuccessfulFetch() {
-            when(creditRepository.fetchCreditDraftSummariesSingle()).thenReturn(Completable.complete());
+            when(creditRepository.fetchCreditDrafts()).thenReturn(Completable.complete());
             return this;
         }
 
         private ArrangeBuilder withFetchError(@NonNull final Throwable throwable) {
-            when(creditRepository.fetchCreditDraftSummariesSingle()).thenReturn(Completable.error(throwable));
+            when(creditRepository.fetchCreditDrafts()).thenReturn(Completable.error(throwable));
             return this;
         }
     }

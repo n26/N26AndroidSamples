@@ -9,16 +9,16 @@ import java.util.List;
 
 import de.n26.n26androidsamples.base.data.EssentialParamMissingException;
 import de.n26.n26androidsamples.credit.data.CreditDataConstants.RawDraftStatus;
-import de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus;
+import de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus;
 import polanski.option.Option;
 import timber.log.Timber;
 
-final class CreditDraftSummaryMapper {
+final class CreditDraftMapper {
 
     @NonNull
-    static List<CreditDraftSummary> processList(@NonNull final List<CreditDraftSummaryRaw> rawList) {
-        final List<CreditDraftSummary> draftList = new ArrayList<>();
-        for (CreditDraftSummaryRaw raw : rawList) {
+    static List<CreditDraft> processList(@NonNull final List<CreditDraftRaw> rawList) {
+        final List<CreditDraft> draftList = new ArrayList<>();
+        for (CreditDraftRaw raw : rawList) {
             draftList.add(processSingular(raw));
         }
 
@@ -27,18 +27,18 @@ final class CreditDraftSummaryMapper {
 
     @NonNull
     @SuppressWarnings("ConstantConditions")
-    static CreditDraftSummary processSingular(@NonNull final CreditDraftSummaryRaw raw) {
+    static CreditDraft processSingular(@NonNull final CreditDraftRaw raw) {
         assertEssentialParams(raw);
 
-        return CreditDraftSummary.builder()
-                                 .id(raw.id())
-                                 .purpose(raw.purposeName())
-                                 .amount(raw.amount())
-                                 .status(toStatus(raw.status()))
-                                 .creditRepaymentInfo(mapRepaymentInfo(raw.repaymentInfo()))
-                                 .imageUrl(raw.imageUrl())
-                                 .purposeId(raw.purposeId())
-                                 .build();
+        return CreditDraft.builder()
+                          .id(raw.id())
+                          .purpose(raw.purposeName())
+                          .amount(raw.amount())
+                          .status(toStatus(raw.status()))
+                          .creditRepaymentInfo(mapRepaymentInfo(raw.repaymentInfo()))
+                          .imageUrl(raw.imageUrl())
+                          .purposeId(raw.purposeId())
+                          .build();
     }
 
     @NonNull
@@ -73,7 +73,7 @@ final class CreditDraftSummaryMapper {
         }
     }
 
-    private static void assertEssentialParams(@NonNull final CreditDraftSummaryRaw raw) {
+    private static void assertEssentialParams(@NonNull final CreditDraftRaw raw) {
         String missingParams = "";
 
         if (TextUtils.isEmpty(raw.status())) {

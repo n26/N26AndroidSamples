@@ -19,21 +19,21 @@ class MockCreditService implements CreditService {
     }
 
     @Override
-    public Single<List<CreditDraftSummaryRaw>> getDraftSummaryList() {
+    public Single<List<CreditDraftRaw>> getCreditDrafts() {
         return Single.just(Collections.singletonList(creditDraftSummaryRawTestBuilder().status("IN_REPAYMENT").build()));
     }
 
-    static CreditDraftSummaryRaw.Builder creditDraftSummaryRawTestBuilder() {
-        return CreditDraftSummaryRaw.builder()
-                                    .amount(0.0)
-                                    .id("ID")
-                                    .imageUrl("imageUrl")
-                                    .dayOfMonth(1)
-                                    .purposeId(2)
-                                    .purposeName("purpose")
-                                    .status("status")
-                                    .updated("date")
-                                    .repaymentInfo(creditRepaymentInfoRawTestBuilder().build());
+    static CreditDraftRaw.Builder creditDraftSummaryRawTestBuilder() {
+        return CreditDraftRaw.builder()
+                             .amount(0.0)
+                             .id("ID")
+                             .imageUrl("imageUrl")
+                             .dayOfMonth(1)
+                             .purposeId(2)
+                             .purposeName("purpose")
+                             .status("status")
+                             .updated("date")
+                             .repaymentInfo(creditRepaymentInfoRawTestBuilder().build());
     }
 
     static CreditRepaymentInfoRaw.Builder creditRepaymentInfoRawTestBuilder() {

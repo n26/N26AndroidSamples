@@ -8,5 +8,5 @@ import retrofit2.http.GET;
 interface CreditService {
 
     @GET("credit/drafts")
-    Single<List<CreditDraftSummaryRaw>> getDraftSummaryList();
+    Single<List<CreditDraftRaw>> getCreditDrafts();
 }

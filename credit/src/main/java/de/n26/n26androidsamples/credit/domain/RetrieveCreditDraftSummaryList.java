@@ -8,13 +8,13 @@ import javax.inject.Inject;
 
 import de.n26.n26androidsamples.base.common.rx.UnwrapOptionTransformer;
 import de.n26.n26androidsamples.base.domain.ReactiveInteractor.RetrieveInteractor;
-import de.n26.n26androidsamples.credit.data.CreditDraftSummary;
+import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import polanski.option.Option;
 
-public class RetrieveCreditDraftSummaryList implements RetrieveInteractor<Void, List<CreditDraftSummary>> {
+public class RetrieveCreditDraftSummaryList implements RetrieveInteractor<Void, List<CreditDraft>> {
 
     @NonNull
     private final CreditRepository creditRepository;
@@ -32,17 +32,17 @@ public class RetrieveCreditDraftSummaryList implements RetrieveInteractor<Void, 
      */
     @NonNull
     @Override
-    public Flowable<List<CreditDraftSummary>> getBehaviorStream(@NonNull final Option<Void> params) {
-        return creditRepository.getCreditDraftSummaryListBehaviorStream()
+    public Flowable<List<CreditDraft>> getBehaviorStream(@NonNull final Option<Void> params) {
+        return creditRepository.getAllCreditDrafts()
                                .flatMap(draftsOption -> fetchIfRepositoryIsEmpty(draftsOption).andThen(Flowable.just(draftsOption)))
                                .compose(new UnwrapOptionTransformer<>());
     }
 
     @NonNull
-    private Completable fetchIfRepositoryIsEmpty(@NonNull final Option<List<CreditDraftSummary>> drafts) {
+    private Completable fetchIfRepositoryIsEmpty(@NonNull final Option<List<CreditDraft>> drafts) {
         return drafts.isNone()
-               ? creditRepository.fetchCreditDraftSummariesSingle()
-               : Completable.complete();
+                ? creditRepository.fetchCreditDrafts()
+                : Completable.complete();
     }
 
 }

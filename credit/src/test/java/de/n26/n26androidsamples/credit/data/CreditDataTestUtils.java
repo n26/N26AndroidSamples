@@ -2,31 +2,31 @@ package de.n26.n26androidsamples.credit.data;
 
 import polanski.option.Option;
 
-import static de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus.UNEXPECTED;
+import static de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus.UNEXPECTED;
 
 public class CreditDataTestUtils {
 
-    static CreditDraftSummaryRaw.Builder creditDraftSummaryRawTestBuilder() {
-        return CreditDraftSummaryRaw.builder()
-                                    .amount(0.0)
-                                    .id("ID")
-                                    .imageUrl("imageUrl")
-                                    .dayOfMonth(1)
-                                    .purposeId(2)
-                                    .purposeName("purpose")
-                                    .status("status")
-                                    .updated("date");
+    static CreditDraftRaw.Builder creditDraftRawTestBuilder() {
+        return CreditDraftRaw.builder()
+                             .amount(0.0)
+                             .id("ID")
+                             .imageUrl("imageUrl")
+                             .dayOfMonth(1)
+                             .purposeId(2)
+                             .purposeName("purpose")
+                             .status("status")
+                             .updated("date");
     }
 
-    public static CreditDraftSummary.Builder creditDraftSummaryTestBuilder() {
-        return CreditDraftSummary.builder()
-                                 .id("ID")
-                                 .purpose("PURPOSE")
-                                 .purposeId(5)
-                                 .status(UNEXPECTED)
-                                 .amount(0.0)
-                                 .imageUrl("imageUrl")
-                                 .creditRepaymentInfo(Option.ofObj(creditRepaymentInfoTestBuilder().build()));
+    public static CreditDraft.Builder creditDraftTestBuilder() {
+        return CreditDraft.builder()
+                          .id("ID")
+                          .purpose("PURPOSE")
+                          .purposeId(5)
+                          .status(UNEXPECTED)
+                          .amount(0.0)
+                          .imageUrl("imageUrl")
+                          .creditRepaymentInfo(Option.ofObj(creditRepaymentInfoTestBuilder().build()));
     }
 
     static CreditRepaymentInfoRaw.Builder creditRepaymentInfoRawTestBuilder() {

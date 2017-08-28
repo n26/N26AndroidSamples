@@ -17,27 +17,27 @@ import polanski.option.Option;
 public class CreditRepository {
 
     @NonNull
-    private final ReactiveStore<String, CreditDraftSummary> store;
+    private final ReactiveStore<String, CreditDraft> store;
 
     @NonNull
     private final CreditService creditService;
 
     @Inject
-    CreditRepository(@NonNull final ReactiveStore<String, CreditDraftSummary> store,
+    CreditRepository(@NonNull final ReactiveStore<String, CreditDraft> store,
                      @NonNull final CreditService creditService) {
         this.store = store;
         this.creditService = creditService;
     }
 
     @NonNull
-    public Flowable<Option<List<CreditDraftSummary>>> getCreditDraftSummaryListBehaviorStream() {
+    public Flowable<Option<List<CreditDraft>>> getAllCreditDrafts() {
         return store.getAllBehaviorStream();
     }
 
     @NonNull
-    public Completable fetchCreditDraftSummariesSingle() {
-        return creditService.getDraftSummaryList()
-                            .map(CreditDraftSummaryMapper::processList)
+    public Completable fetchCreditDrafts() {
+        return creditService.getCreditDrafts()
+                            .map(CreditDraftMapper::processList)
                             .doOnSuccess(store::replaceAll)
                             .toCompletable()
                             .subscribeOn(Schedulers.computation());

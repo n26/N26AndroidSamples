@@ -22,8 +22,7 @@ public interface ReactiveInteractor {
     interface SendInteractor<Params, Result> extends ReactiveInteractor {
 
         @NonNull
-        Single<Result> getSingle(
-                @NonNull final Option<Params> params);
+        Single<Result> getSingle(@NonNull final Option<Params> params);
     }
 
     /**
@@ -37,8 +36,7 @@ public interface ReactiveInteractor {
     interface RetrieveInteractor<Params, Object> extends ReactiveInteractor {
 
         @NonNull
-        Flowable<Object> getBehaviorStream(
-                @NonNull final Option<Params> params);
+        Flowable<Object> getBehaviorStream(@NonNull final Option<Params> params);
     }
 
     /**

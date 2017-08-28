@@ -1,13 +1,13 @@
 package de.n26.n26androidsamples.credit.data;
 
-import android.support.annotation.NonNull;
-
 import com.google.auto.value.AutoValue;
+
+import android.support.annotation.NonNull;
 
 import polanski.option.Option;
 
 @AutoValue
-public abstract class CreditDraftSummary {
+public abstract class CreditDraft {
 
     public enum CreditDraftStatus {
         INITIALISED,
@@ -41,7 +41,7 @@ public abstract class CreditDraftSummary {
 
     @NonNull
     public static Builder builder() {
-        return new AutoValue_CreditDraftSummary.Builder();
+        return new AutoValue_CreditDraft.Builder();
     }
 
     @AutoValue.Builder
@@ -61,6 +61,6 @@ public abstract class CreditDraftSummary {
 
         Builder creditRepaymentInfo(final Option<CreditRepaymentInfo> creditRepaymentInfo);
 
-        CreditDraftSummary build();
+        CreditDraft build();
     }
 }

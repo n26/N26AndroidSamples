@@ -9,17 +9,17 @@ import de.n26.n26androidsamples.base.common.utils.CurrencyUtils;
 import de.n26.n26androidsamples.base.common.utils.TimeUtils;
 import de.n26.n26androidsamples.base.presentation.providers.StringProvider;
 import de.n26.n26androidsamples.credit.R;
-import de.n26.n26androidsamples.credit.data.CreditDraftSummary;
-import de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus;
+import de.n26.n26androidsamples.credit.data.CreditDraft;
+import de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus;
 import de.n26.n26androidsamples.credit.data.CreditRepaymentInfo;
 import io.reactivex.functions.Function;
 
-import static de.n26.n26androidsamples.credit.data.CreditDraftSummary.CreditDraftStatus.IN_REPAYMENT;
+import static de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus.IN_REPAYMENT;
 import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPresentationConstants.DateFormats.DASHBOARD_DATE_FORMAT_NEXT_PAYMENT;
 import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPresentationConstants.DateFormats.DASHBOARD_DATE_FORMAT_PAID_OUT;
 import static polanski.option.OptionUnsafe.orThrowUnsafe;
 
-class InRepaymentCardViewEntityMapper implements Function<CreditDraftSummary, InRepaymentCardViewEntity> {
+class InRepaymentCardViewEntityMapper implements Function<CreditDraft, InRepaymentCardViewEntity> {
 
     private static final String TAG = InRepaymentCardViewEntityMapper.class.getSimpleName();
 
@@ -42,7 +42,7 @@ class InRepaymentCardViewEntityMapper implements Function<CreditDraftSummary, In
     }
 
     @NonNull
-    public InRepaymentCardViewEntity apply(@NonNull final CreditDraftSummary draft) throws Exception {
+    public InRepaymentCardViewEntity apply(@NonNull final CreditDraft draft) throws Exception {
         assertCorrectStatus(draft.status());
 
         final CreditRepaymentInfo repaymentInfo = orThrowUnsafe(draft.creditRepaymentInfo(),

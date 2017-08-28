@@ -31,7 +31,7 @@ public class CreditRepository {
 
     @NonNull
     public Flowable<Option<List<CreditDraft>>> getAllCreditDrafts() {
-        return store.getAllBehaviorStream();
+        return store.getAll();
     }
 
     @NonNull

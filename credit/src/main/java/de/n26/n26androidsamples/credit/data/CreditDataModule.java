@@ -39,13 +39,13 @@ public class CreditDataModule {
     @Provides
     @Singleton
     Store.MemoryStore<String, CreditDraft> provideCache(TimestampProvider timestampProvider, AndroidPreconditions androidPreconditions) {
-        return new Cache<String, CreditDraft>(timestampProvider, androidPreconditions, CreditDraft::id, CACHE_MAX_AGE);
+        return new Cache<>(CreditDraft::id, timestampProvider, androidPreconditions, CACHE_MAX_AGE);
     }
 
     @Provides
     @Singleton
     ReactiveStore<String, CreditDraft> provideReactiveStore(Store.MemoryStore<String, CreditDraft> cache,
                                                             AndroidPreconditions androidPreconditions) {
-        return new MemoryReactiveStore<>(cache, androidPreconditions, CreditDraft::id);
+        return new MemoryReactiveStore<>(CreditDraft::id, cache, androidPreconditions);
     }
 }

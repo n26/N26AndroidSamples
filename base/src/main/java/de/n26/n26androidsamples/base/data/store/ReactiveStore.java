@@ -8,7 +8,7 @@ import io.reactivex.Flowable;
 import polanski.option.Option;
 
 /**
- * Interface for any kind of reactive store.
+ Interface for any kind of reactive store.
  */
 public interface ReactiveStore<Key, Value> {
 
@@ -18,7 +18,7 @@ public interface ReactiveStore<Key, Value> {
 
     void replaceAll(@NonNull final List<Value> modelList);
 
-    Flowable<Option<Value>> getSingularBehaviorStream(@NonNull final Key key);
+    Flowable<Option<Value>> getSingular(@NonNull final Key key);
 
-    Flowable<Option<List<Value>>> getAllBehaviorStream();
+    Flowable<Option<List<Value>>> getAll();
 }

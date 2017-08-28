@@ -19,7 +19,7 @@ import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
 
 /**
- * Generic memory cache with timeout for the entries.
+ Generic memory cache with timeout for the entries.
  */
 public class Cache<Key, Value> implements MemoryStore<Key, Value> {
 
@@ -37,22 +37,22 @@ public class Cache<Key, Value> implements MemoryStore<Key, Value> {
 
     private final Map<Key, CacheEntry<Value>> cache = new ConcurrentHashMap<>();
 
-    public Cache(@NonNull final TimestampProvider timestampProvider,
-                 @NonNull final AndroidPreconditions androidPreconditions,
-                 @NonNull final Func1<Value, Key> extractKeyFromModel) {
-        this(timestampProvider, androidPreconditions, extractKeyFromModel, none());
+    public Cache(@NonNull final Func1<Value, Key> extractKeyFromModel,
+                 @NonNull final TimestampProvider timestampProvider,
+                 @NonNull final AndroidPreconditions androidPreconditions) {
+        this(extractKeyFromModel, timestampProvider, androidPreconditions, none());
     }
 
-    public Cache(@NonNull final TimestampProvider timestampProvider,
+    public Cache(@NonNull final Func1<Value, Key> extractKeyFromModel,
+                 @NonNull final TimestampProvider timestampProvider,
                  @NonNull final AndroidPreconditions androidPreconditions,
-                 @NonNull final Func1<Value, Key> extractKeyFromModel,
                  final long timeoutMs) {
-        this(timestampProvider, androidPreconditions, extractKeyFromModel, ofObj(timeoutMs));
+        this(extractKeyFromModel, timestampProvider, androidPreconditions, ofObj(timeoutMs));
     }
 
-    private Cache(@NonNull final TimestampProvider timestampProvider,
+    private Cache(@NonNull final Func1<Value, Key> extractKeyFromModel,
+                  @NonNull final TimestampProvider timestampProvider,
                   @NonNull final AndroidPreconditions androidPreconditions,
-                  @NonNull final Func1<Value, Key> extractKeyFromModel,
                   @NonNull final Option<Long> timeoutMs) {
         this.timestampProvider = timestampProvider;
         this.androidPreconditions = androidPreconditions;
@@ -116,7 +116,7 @@ public class Cache<Key, Value> implements MemoryStore<Key, Value> {
 
     private boolean notExpired(@NonNull final CacheEntry<Value> cacheEntry) {
         return itemLifespanMs.match(lifespanMs -> cacheEntry.creationTimestamp() + lifespanMs > timestampProvider.currentTimeMillis(),
-            // When lifespan was not set the items in the cache never expire
-            () -> true);
+                                    // When lifespan was not set the items in the cache never expire
+                                    () -> true);
     }
 }

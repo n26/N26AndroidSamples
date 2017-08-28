@@ -19,7 +19,7 @@ import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
 
 /**
- * This reactive store has only a memory cache as form of storage.
+ This reactive store has only a memory cache as form of storage.
  */
 public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value> {
 
@@ -38,10 +38,9 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     @NonNull
     private final Map<Key, FlowableProcessor<Option<Value>>> processorMap = new HashMap<>();
 
-
-    public MemoryReactiveStore(@NonNull final Store.MemoryStore<Key, Value> cache,
-                               @NonNull final AndroidPreconditions androidPreconditions,
-                               @NonNull final Func1<Value, Key> extractKeyFromModel) {
+    public MemoryReactiveStore(@NonNull final Func1<Value, Key> extractKeyFromModel,
+                               @NonNull final Store.MemoryStore<Key, Value> cache,
+                               @NonNull final AndroidPreconditions androidPreconditions) {
         this.allProcessor = PublishProcessor.<Option<List<Value>>>create().toSerialized();
         this.cache = cache;
         this.androidPreconditions = androidPreconditions;
@@ -77,7 +76,7 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     @NonNull
-    public Flowable<Option<Value>> getSingularBehaviorStream(@NonNull final Key key) {
+    public Flowable<Option<Value>> getSingular(@NonNull final Key key) {
         androidPreconditions.assertWorkerThread();
 
         final Option<Value> model = cache.get(key).map(Option::ofObj).blockingGet(none());
@@ -85,7 +84,7 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     @NonNull
-    public Flowable<Option<List<Value>>> getAllBehaviorStream() {
+    public Flowable<Option<List<Value>>> getAll() {
         //FIXME
         //        androidPreconditions.assertWorkerThread();
 
@@ -110,7 +109,7 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     /**
-     * Publishes the cached data in each independent stream only if it exists already.
+     Publishes the cached data in each independent stream only if it exists already.
      */
     private void publishInEachKey() {
         final Set<Key> keySet;
@@ -124,8 +123,8 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     /**
-     * Publishes the cached value if there is an already existing stream for the passed key. The case where there isn't a stream for the passed key
-     * means that the data for this key is not being consumed and therefore there is no need to publish.
+     Publishes the cached value if there is an already existing stream for the passed key. The case where there isn't a stream for the passed key
+     means that the data for this key is not being consumed and therefore there is no need to publish.
      */
     private void publishInKey(@NonNull final Key key, @NonNull final Option<Value> model) {
         final FlowableProcessor<Option<Value>> processor;

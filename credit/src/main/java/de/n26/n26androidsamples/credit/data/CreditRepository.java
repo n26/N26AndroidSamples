@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import de.n26.n26androidsamples.base.data.store.ReactiveStore;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import polanski.option.Option;
 
@@ -22,11 +23,16 @@ public class CreditRepository {
     @NonNull
     private final CreditService creditService;
 
+    @NonNull
+    private final CreditDraftMapper creditDraftMapper;
+
     @Inject
     CreditRepository(@NonNull final ReactiveStore<String, CreditDraft> store,
-                     @NonNull final CreditService creditService) {
+                     @NonNull final CreditService creditService,
+                     @NonNull final CreditDraftMapper creditDraftMapper) {
         this.store = store;
         this.creditService = creditService;
+        this.creditDraftMapper = creditDraftMapper;
     }
 
     @NonNull
@@ -37,9 +43,12 @@ public class CreditRepository {
     @NonNull
     public Completable fetchCreditDrafts() {
         return creditService.getCreditDrafts()
-                            .map(CreditDraftMapper::processList)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.computation())
+                            .flatMapObservable(Observable::fromIterable)
+                            .map(creditDraftMapper)
+                            .toList()
                             .doOnSuccess(store::replaceAll)
-                            .toCompletable()
-                            .subscribeOn(Schedulers.computation());
+                            .toCompletable();
     }
 }

@@ -4,30 +4,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.n26.n26androidsamples.base.data.EssentialParamMissingException;
 import de.n26.n26androidsamples.credit.data.CreditDataConstants.RawDraftStatus;
 import de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus;
+import io.reactivex.functions.Function;
 import polanski.option.Option;
 import timber.log.Timber;
 
-final class CreditDraftMapper {
+class CreditDraftMapper implements Function<CreditDraftRaw, CreditDraft> {
 
-    @NonNull
-    static List<CreditDraft> processList(@NonNull final List<CreditDraftRaw> rawList) {
-        final List<CreditDraft> draftList = new ArrayList<>();
-        for (CreditDraftRaw raw : rawList) {
-            draftList.add(processSingular(raw));
-        }
-
-        return draftList;
-    }
-
-    @NonNull
+    @Override
     @SuppressWarnings("ConstantConditions")
-    static CreditDraft processSingular(@NonNull final CreditDraftRaw raw) {
+    public CreditDraft apply(@NonNull final CreditDraftRaw raw) throws Exception {
         assertEssentialParams(raw);
 
         return CreditDraft.builder()

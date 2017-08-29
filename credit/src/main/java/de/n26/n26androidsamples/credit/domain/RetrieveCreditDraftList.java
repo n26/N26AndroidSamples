@@ -12,15 +12,18 @@ import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import polanski.option.Option;
 
-public class RetrieveCreditDraftSummaryList implements RetrieveInteractor<Void, List<CreditDraft>> {
+import static io.reactivex.Single.just;
+
+public class RetrieveCreditDraftList implements RetrieveInteractor<Void, List<CreditDraft>> {
 
     @NonNull
     private final CreditRepository creditRepository;
 
     @Inject
-    RetrieveCreditDraftSummaryList(@NonNull final CreditRepository creditRepository) {
+    RetrieveCreditDraftList(@NonNull final CreditRepository creditRepository) {
         this.creditRepository = creditRepository;
     }
 
@@ -34,15 +37,21 @@ public class RetrieveCreditDraftSummaryList implements RetrieveInteractor<Void, 
     @Override
     public Flowable<List<CreditDraft>> getBehaviorStream(@NonNull final Option<Void> params) {
         return creditRepository.getAllCreditDrafts()
-                               .flatMap(draftsOption -> fetchIfRepositoryIsEmpty(draftsOption).andThen(Flowable.just(draftsOption)))
-                               .compose(new UnwrapOptionTransformer<>());
+                               // fetch if emited value is none
+                               .flatMapSingle(this::fetchWhenNoneAndThenDrafts)
+                               // unwrap if some, filter if none
+                               .compose(UnwrapOptionTransformer.create());
     }
 
     @NonNull
-    private Completable fetchIfRepositoryIsEmpty(@NonNull final Option<List<CreditDraft>> drafts) {
+    private Single<Option<List<CreditDraft>>> fetchWhenNoneAndThenDrafts(@NonNull final Option<List<CreditDraft>> drafts) {
+        return fetchWhenNone(drafts).andThen(just(drafts));
+    }
+
+    @NonNull
+    private Completable fetchWhenNone(@NonNull final Option<List<CreditDraft>> drafts) {
         return drafts.isNone()
                 ? creditRepository.fetchCreditDrafts()
                 : Completable.complete();
     }
-
 }

@@ -17,4 +17,8 @@ public final class UnwrapOptionTransformer<T> implements FlowableTransformer<Opt
         return upstream.filter(Option::isSome)
                        .map(OptionUnsafe::getUnsafe);
     }
+
+    public static <T> UnwrapOptionTransformer<T> create() {
+        return new UnwrapOptionTransformer<>();
+    }
 }

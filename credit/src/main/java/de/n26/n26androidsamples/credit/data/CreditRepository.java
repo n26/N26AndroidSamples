@@ -37,7 +37,8 @@ public class CreditRepository {
 
     @NonNull
     public Flowable<Option<List<CreditDraft>>> getAllCreditDrafts() {
-        return store.getAll();
+        return store.getAll()
+                    .observeOn(Schedulers.computation());
     }
 
     @NonNull
@@ -46,8 +47,10 @@ public class CreditRepository {
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.computation())
                             .flatMapObservable(Observable::fromIterable)
+                            // map from raw to safe
                             .map(creditDraftMapper)
                             .toList()
+                            // put mapped objects in store
                             .doOnSuccess(store::replaceAll)
                             .toCompletable();
     }

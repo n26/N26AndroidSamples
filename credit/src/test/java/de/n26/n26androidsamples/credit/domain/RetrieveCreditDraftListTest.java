@@ -27,7 +27,7 @@ public class RetrieveCreditDraftListTest extends BaseTest {
     @Mock
     private CreditRepository creditRepository;
 
-    private RetrieveCreditDraftSummaryList interactor;
+    private RetrieveCreditDraftList interactor;
 
     private ArrangeBuilder arrangeBuilder;
 
@@ -35,7 +35,7 @@ public class RetrieveCreditDraftListTest extends BaseTest {
 
     @Before
     public void setUp() {
-        interactor = new RetrieveCreditDraftSummaryList(creditRepository);
+        interactor = new RetrieveCreditDraftList(creditRepository);
         arrangeBuilder = new ArrangeBuilder();
         ts = new TestSubscriber<>();
     }
@@ -50,7 +50,7 @@ public class RetrieveCreditDraftListTest extends BaseTest {
         arrangeBuilder.emitDraftListFromRepo(Option.ofObj(testDraftList));
 
         // Assert
-        ts.assertNoErrors();
+        ts.assertNotTerminated();
         ts.assertValue(testDraftList);
     }
 
@@ -66,7 +66,7 @@ public class RetrieveCreditDraftListTest extends BaseTest {
         // Assert
         verify(creditRepository).fetchCreditDrafts();
         ts.assertNoValues();
-        ts.assertNoErrors();
+        ts.assertNotTerminated();
     }
 
     @Test

@@ -1,18 +1,18 @@
 package de.n26.n26androidsamples.credit.presentation.dashboard;
 
+import org.reactivestreams.Publisher;
+
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
-
-import org.reactivestreams.Publisher;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
-import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftSummaryList;
+import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftList;
 import io.reactivex.Flowable;
 
 import static de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem.toDisplayableItem;
@@ -22,15 +22,15 @@ import static polanski.option.Option.none;
 public class CreditDashboardViewModel extends ViewModel {
 
     @NonNull
-    private final RetrieveCreditDraftSummaryList retrieveCreditDraftSummaryList;
+    private final RetrieveCreditDraftList retrieveCreditDraftList;
 
     @NonNull
     private final InRepaymentCardViewEntityMapper inRepaymentCardViewEntityMapper;
 
     @Inject
-    CreditDashboardViewModel(@NonNull final RetrieveCreditDraftSummaryList retrieveCreditDraftSummaryList,
+    CreditDashboardViewModel(@NonNull final RetrieveCreditDraftList retrieveCreditDraftList,
                              @NonNull final InRepaymentCardViewEntityMapper inRepaymentCardViewEntityMapper) {
-        this.retrieveCreditDraftSummaryList = retrieveCreditDraftSummaryList;
+        this.retrieveCreditDraftList = retrieveCreditDraftList;
         this.inRepaymentCardViewEntityMapper = inRepaymentCardViewEntityMapper;
     }
 
@@ -41,8 +41,8 @@ public class CreditDashboardViewModel extends ViewModel {
 
     @NonNull
     private Publisher<List<DisplayableItem>> displayableItemListPublisher() {
-        return retrieveCreditDraftSummaryList.getBehaviorStream(none())
-                                             .flatMapSingle(draftList -> Flowable.fromIterable(draftList)
+        return retrieveCreditDraftList.getBehaviorStream(none())
+                                      .flatMapSingle(draftList -> Flowable.fromIterable(draftList)
                                                                                  .map(inRepaymentCardViewEntityMapper)
                                                                                  .map(viewEntity -> toDisplayableItem(viewEntity, IN_REPAYMENT))
                                                                                  .toList());

@@ -62,7 +62,7 @@ class InRepaymentCardViewEntityMapper implements Function<CreditDraft, InRepayme
     @SuppressWarnings("unchecked")
     @NonNull
     private String mapToFormattedPaidOutDate(@NonNull final String paidOutDate) {
-        final String formattedPaidOutDate = timeUtils.formatIsoStringToDate(paidOutDate, DASHBOARD_DATE_FORMAT_PAID_OUT);
+        final String formattedPaidOutDate = timeUtils.formatDateString(paidOutDate, DASHBOARD_DATE_FORMAT_PAID_OUT);
         return stringProvider.getStringAndApplySubstitutions(R.string.credit_dashboard_repayment_paid_out,
                                                              Pair.create("date", formattedPaidOutDate));
     }
@@ -78,7 +78,7 @@ class InRepaymentCardViewEntityMapper implements Function<CreditDraft, InRepayme
     @NonNull
     private String mapToNextPaymentInfo(final double nextPayment, @NonNull final String nextPaymentDate) {
         final String formattedNextPayment = currencyUtils.formatAmount(nextPayment);
-        final String formattedNextPaymentDate = timeUtils.formatIsoStringToDate(nextPaymentDate, DASHBOARD_DATE_FORMAT_NEXT_PAYMENT);
+        final String formattedNextPaymentDate = timeUtils.formatDateString(nextPaymentDate, DASHBOARD_DATE_FORMAT_NEXT_PAYMENT);
         return stringProvider.getStringAndApplySubstitutions(R.string.credit_dashboard_repayment_text,
                                                              Pair.create("amount", formattedNextPayment),
                                                              Pair.create("date", formattedNextPaymentDate));

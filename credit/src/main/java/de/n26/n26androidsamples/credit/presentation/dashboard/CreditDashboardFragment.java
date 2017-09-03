@@ -39,7 +39,7 @@ public class CreditDashboardFragment extends BaseInjectingFragment {
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final CreditDashboardViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreditDashboardViewModel.class);
-        viewModel.getDisplayableItemListLiveData().observe(this, this::updateListView);
+        viewModel.getCreditListLiveData().observe(this, this::updateListView);
     }
 
     @Override

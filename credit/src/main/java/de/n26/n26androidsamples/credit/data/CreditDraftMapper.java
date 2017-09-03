@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import javax.inject.Inject;
+
 import de.n26.n26androidsamples.base.data.EssentialParamMissingException;
 import de.n26.n26androidsamples.credit.data.CreditDataConstants.RawDraftStatus;
 import de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus;
@@ -12,6 +14,9 @@ import polanski.option.Option;
 import timber.log.Timber;
 
 class CreditDraftMapper implements Function<CreditDraftRaw, CreditDraft> {
+
+    @Inject
+    public CreditDraftMapper() {}
 
     @Override
     @SuppressWarnings("ConstantConditions")

@@ -8,7 +8,7 @@ import de.n26.n26androidsamples.base.injection.modules.ActivityModule;
 import de.n26.n26androidsamples.home.presentation.HomeActivityComponent;
 
 @Singleton
-@Component(modules = {ApplicationModule.class, NetworkModule.class, LoggingModule.class, DataModule.class})
+@Component(modules = {ApplicationModule.class, NetworkModule.class, LoggingModule.class, DataModule.class, ViewModelModule.class})
 public interface ApplicationComponent {
 
     void inject(N26SamplesApplication app);

@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import de.n26.n26androidsamples.base.injection.scopes.FragmentScope;
 import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
 import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftList;
 import io.reactivex.disposables.CompositeDisposable;
@@ -19,7 +18,6 @@ import timber.log.Timber;
 
 import static polanski.option.Option.none;
 
-@FragmentScope
 public class CreditDashboardViewModel extends ViewModel {
 
     @NonNull

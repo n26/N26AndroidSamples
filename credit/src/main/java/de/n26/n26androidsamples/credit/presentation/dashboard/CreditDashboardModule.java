@@ -1,7 +1,5 @@
 package de.n26.n26androidsamples.credit.presentation.dashboard;
 
-import android.arch.lifecycle.ViewModelProvider;
-
 import java.util.Map;
 
 import dagger.Binds;
@@ -14,7 +12,6 @@ import de.n26.n26androidsamples.base.presentation.recyclerview.ItemComparator;
 import de.n26.n26androidsamples.base.presentation.recyclerview.RecyclerViewAdapter;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ViewHolderBinder;
 import de.n26.n26androidsamples.base.presentation.recyclerview.ViewHolderFactory;
-import de.n26.n26androidsamples.base.presentation.utils.ViewModelUtil;
 import de.n26.n26androidsamples.credit.presentation.dashboard.InRepaymentCardViewHolder.InRepaymentCardHolderBinder;
 import de.n26.n26androidsamples.credit.presentation.dashboard.InRepaymentCardViewHolder.InRepaymentCardHolderFactory;
 
@@ -22,11 +19,6 @@ import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPrese
 
 @Module
 public abstract class CreditDashboardModule {
-
-    @Provides
-    static ViewModelProvider.Factory provideViewModelProviderFactory(ViewModelUtil viewModelUtil, CreditDashboardViewModel viewModel) {
-        return viewModelUtil.createFor(viewModel);
-    }
 
     @Provides
     static RecyclerViewAdapter provideRecyclerAdapter(ItemComparator itemComparator,

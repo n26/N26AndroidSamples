@@ -8,7 +8,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoSet;
-import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
 import de.n26.n26androidsamples.base.common.providers.TimestampProvider;
 import de.n26.n26androidsamples.base.data.cache.Cache;
 import de.n26.n26androidsamples.base.data.store.MemoryReactiveStore;
@@ -44,8 +43,7 @@ public class CreditDataModule {
 
     @Provides
     @Singleton
-    ReactiveStore<String, CreditDraft> provideReactiveStore(Store.MemoryStore<String, CreditDraft> cache,
-                                                            AndroidPreconditions androidPreconditions) {
-        return new MemoryReactiveStore<>(CreditDraft::id, cache, androidPreconditions);
+    ReactiveStore<String, CreditDraft> provideReactiveStore(Store.MemoryStore<String, CreditDraft> cache) {
+        return new MemoryReactiveStore<>(CreditDraft::id, cache);
     }
 }

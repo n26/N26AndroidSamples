@@ -8,7 +8,7 @@ import javax.inject.Inject;
 public final class StringUtils {
 
     @Inject
-    public StringUtils() {}
+    StringUtils() {}
 
     /**
      Use to replace the placeholders for strings that use the format "text {{placeholder}} text".

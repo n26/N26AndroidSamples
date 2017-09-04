@@ -1,7 +1,6 @@
 package de.n26.n26androidsamples.credit.data;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import de.n26.n26androidsamples.base.data.EssentialParamMissingException;
 
@@ -23,11 +22,11 @@ final class CreditRepaymentInfoMapper {
     private static void assertEssentialParams(@NonNull final CreditRepaymentInfoRaw raw) {
         String missingParams = "";
 
-        if (TextUtils.isEmpty(raw.disbursedDate())) {
+        if (raw.disbursedDate() == null || raw.disbursedDate().isEmpty()) {
             missingParams += "disbursedDate";
         }
 
-        if (TextUtils.isEmpty(raw.nextPaymentDate())) {
+        if (raw.nextPaymentDate() == null || !raw.nextPaymentDate().isEmpty()) {
             missingParams += " nextPaymentDate";
         }
 

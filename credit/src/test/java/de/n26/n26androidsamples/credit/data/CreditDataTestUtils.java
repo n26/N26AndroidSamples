@@ -41,7 +41,7 @@ public class CreditDataTestUtils {
                                      .totalPaid(4015.26);
     }
 
-    static CreditRepaymentInfo.Builder creditRepaymentInfoTestBuilder() {
+    public static CreditRepaymentInfo.Builder creditRepaymentInfoTestBuilder() {
         return CreditRepaymentInfo.builder()
                                   .disbursedDate("2017-08-07T17:53:55.07+02:00")
                                   .nextPaymentDate("2017-08-07T17:53:55.07+02:00")

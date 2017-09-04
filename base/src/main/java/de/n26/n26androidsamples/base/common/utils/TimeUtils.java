@@ -9,7 +9,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-public final class TimeUtils {
+public class TimeUtils {
 
     @Inject
     TimeUtils() { }

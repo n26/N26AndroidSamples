@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.n26.n26androidsamples.base.common.preconditions.AndroidPreconditions;
 import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
+import io.reactivex.schedulers.Schedulers;
 import polanski.option.Option;
 import polanski.option.function.Func1;
 
@@ -27,9 +27,6 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     private final Store.MemoryStore<Key, Value> cache;
 
     @NonNull
-    private final AndroidPreconditions androidPreconditions;
-
-    @NonNull
     private final Func1<Value, Key> extractKeyFromModel;
 
     @NonNull
@@ -39,17 +36,13 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     private final Map<Key, FlowableProcessor<Option<Value>>> processorMap = new HashMap<>();
 
     public MemoryReactiveStore(@NonNull final Func1<Value, Key> extractKeyFromModel,
-                               @NonNull final Store.MemoryStore<Key, Value> cache,
-                               @NonNull final AndroidPreconditions androidPreconditions) {
+                               @NonNull final Store.MemoryStore<Key, Value> cache) {
         this.allProcessor = PublishProcessor.<Option<List<Value>>>create().toSerialized();
         this.cache = cache;
-        this.androidPreconditions = androidPreconditions;
         this.extractKeyFromModel = extractKeyFromModel;
     }
 
     public void storeSingular(@NonNull final Value model) {
-        androidPreconditions.assertWorkerThread();
-
         final Key key = extractKeyFromModel.call(model);
         cache.putSingular(model);
         getOrCreateSubjectForKey(key).onNext(ofObj(model));
@@ -59,8 +52,6 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     public void storeAll(@NonNull final List<Value> modelList) {
-        androidPreconditions.assertWorkerThread();
-
         cache.putAll(modelList);
         allProcessor.onNext(ofObj(modelList));
         // Publish in all the existing single item streams.
@@ -69,27 +60,22 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     public void replaceAll(@NonNull final List<Value> modelList) {
-        androidPreconditions.assertWorkerThread();
-
         cache.clear();
         storeAll(modelList);
     }
 
     @NonNull
     public Flowable<Option<Value>> getSingular(@NonNull final Key key) {
-        androidPreconditions.assertWorkerThread();
-
         final Option<Value> model = cache.getSingular(key).map(Option::ofObj).blockingGet(none());
-        return getOrCreateSubjectForKey(key).startWith(model);
+        return getOrCreateSubjectForKey(key).startWith(model)
+                                            .observeOn(Schedulers.computation());
     }
 
     @NonNull
     public Flowable<Option<List<Value>>> getAll() {
-        //FIXME
-        //        androidPreconditions.assertWorkerThread();
-
         final Option<List<Value>> allValues = cache.getAll().map(Option::ofObj).blockingGet(none());
-        return allProcessor.startWith(allValues);
+        return allProcessor.startWith(allValues)
+                           .observeOn(Schedulers.computation());
     }
 
     @NonNull

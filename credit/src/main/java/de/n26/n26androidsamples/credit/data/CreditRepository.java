@@ -37,8 +37,7 @@ public class CreditRepository {
 
     @NonNull
     public Flowable<Option<List<CreditDraft>>> getAllCreditDrafts() {
-        return store.getAll()
-                    .observeOn(Schedulers.computation());
+        return store.getAll();
     }
 
     @NonNull

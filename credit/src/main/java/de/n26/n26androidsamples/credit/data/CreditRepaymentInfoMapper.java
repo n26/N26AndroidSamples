@@ -26,7 +26,7 @@ final class CreditRepaymentInfoMapper {
             missingParams += "disbursedDate";
         }
 
-        if (raw.nextPaymentDate() == null || !raw.nextPaymentDate().isEmpty()) {
+        if (raw.nextPaymentDate() == null || raw.nextPaymentDate().isEmpty()) {
             missingParams += " nextPaymentDate";
         }
 

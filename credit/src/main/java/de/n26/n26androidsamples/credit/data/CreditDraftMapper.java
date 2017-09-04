@@ -2,7 +2,6 @@ package de.n26.n26androidsamples.credit.data;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -18,7 +17,7 @@ class CreditDraftMapper implements Function<CreditDraftRaw, CreditDraft> {
     private static final String TAG = CreditDraftMapper.class.getSimpleName();
 
     @Inject
-    public CreditDraftMapper() {}
+    CreditDraftMapper() {}
 
     @Override
     @SuppressWarnings("ConstantConditions")
@@ -71,19 +70,19 @@ class CreditDraftMapper implements Function<CreditDraftRaw, CreditDraft> {
     private static void assertEssentialParams(@NonNull final CreditDraftRaw raw) {
         String missingParams = "";
 
-        if (TextUtils.isEmpty(raw.status())) {
+        if (raw.status() == null || raw.status().isEmpty()) {
             missingParams += "status";
         }
 
-        if (TextUtils.isEmpty(raw.id())) {
+        if (raw.id() == null || raw.id().isEmpty()) {
             missingParams += " id";
         }
 
-        if (TextUtils.isEmpty(raw.purposeName())) {
+        if (raw.purposeName() == null || raw.purposeName().isEmpty()) {
             missingParams += " purpose";
         }
 
-        if (TextUtils.isEmpty(raw.imageUrl())) {
+        if (raw.imageUrl() == null || raw.imageUrl().isEmpty()) {
             missingParams += " imageUrl";
         }
 

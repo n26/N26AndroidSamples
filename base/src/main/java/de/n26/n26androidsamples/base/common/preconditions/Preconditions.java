@@ -3,9 +3,6 @@ package de.n26.n26androidsamples.base.common.preconditions;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-/**
- * Created by Lucia on 14/07/2017.
- */
 public final class Preconditions {
 
     /**

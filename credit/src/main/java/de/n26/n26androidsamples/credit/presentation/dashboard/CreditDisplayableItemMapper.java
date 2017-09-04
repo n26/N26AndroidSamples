@@ -25,7 +25,7 @@ class CreditDisplayableItemMapper implements Function<List<CreditDraft>, List<Di
     }
 
     @Override
-    public List<DisplayableItem> apply(final List<CreditDraft> creditDrafts) throws Exception {
+    public List<DisplayableItem> apply(@NonNull final List<CreditDraft> creditDrafts) throws Exception {
         return Observable.fromIterable(creditDrafts)
                          .map(inRepaymentCardViewEntityMapper)
                          .map(this::wrapInDisplayableItem)

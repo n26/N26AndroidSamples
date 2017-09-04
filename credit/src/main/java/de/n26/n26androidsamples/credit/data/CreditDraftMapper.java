@@ -3,6 +3,7 @@ package de.n26.n26androidsamples.credit.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -11,9 +12,10 @@ import de.n26.n26androidsamples.credit.data.CreditDataConstants.RawDraftStatus;
 import de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus;
 import io.reactivex.functions.Function;
 import polanski.option.Option;
-import timber.log.Timber;
 
 class CreditDraftMapper implements Function<CreditDraftRaw, CreditDraft> {
+
+    private static final String TAG = CreditDraftMapper.class.getSimpleName();
 
     @Inject
     public CreditDraftMapper() {}
@@ -61,7 +63,7 @@ class CreditDraftMapper implements Function<CreditDraftRaw, CreditDraft> {
             case RawDraftStatus.ADDITIONAL_ACCOUNT_REQUIRED:
                 return CreditDraftStatus.ADDITIONAL_ACCOUNT_REQUIRED;
             default:
-                Timber.e("Unknown status coming from backend: " + status);
+                Log.e(TAG, "Unknown status coming from backend: " + status);
                 return CreditDraftStatus.UNEXPECTED;
         }
     }

@@ -4,6 +4,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import android.content.Context;
+import android.util.Log;
 
 import javax.inject.Singleton;
 
@@ -14,7 +15,6 @@ import de.n26.n26androidsamples.application.NetworkModule.AppInterceptor;
 import de.n26.n26androidsamples.application.NetworkModule.NetworkInterceptor;
 import de.n26.n26androidsamples.base.injection.qualifiers.ForApplication;
 import okhttp3.logging.HttpLoggingInterceptor;
-import timber.log.Timber;
 
 @Module
 class InstrumentationModule {
@@ -24,7 +24,7 @@ class InstrumentationModule {
     @IntoSet
     @Singleton
     static HttpLoggingInterceptor provideLoggingInterceptor() {
-        return new HttpLoggingInterceptor(message -> Timber.tag("OkHttp").d(message))
+        return new HttpLoggingInterceptor(message -> Log.d("OkHttp", message))
                 .setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 

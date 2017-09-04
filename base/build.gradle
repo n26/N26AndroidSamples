@@ -95,9 +95,6 @@ dependencies {
     // Optionals
     api commonDependencies.options
 
-    // Timber
-    api commonDependencies.timber
-
     // Stetho
     implementation developmentDependencies.stetho
     implementation developmentDependencies.stethoOkHttp

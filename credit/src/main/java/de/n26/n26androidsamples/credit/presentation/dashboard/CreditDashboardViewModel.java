@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.List;
 
@@ -14,11 +15,12 @@ import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftList;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 import static polanski.option.Option.none;
 
 public class CreditDashboardViewModel extends ViewModel {
+
+    private static final String TAG = CreditDashboardViewModel.class.getSimpleName();
 
     @NonNull
     private final RetrieveCreditDraftList retrieveCreditDraftList;
@@ -59,6 +61,6 @@ public class CreditDashboardViewModel extends ViewModel {
                                       .observeOn(Schedulers.computation())
                                       .flatMapSingle(creditDisplayableItemFlatMapper)
                                       .subscribe(creditListLiveData::postValue,
-                                                 e -> Timber.e(e, "Error updating credit list live data"));
+                                                 e -> Log.e(TAG, "Error updating credit list live data", e));
     }
 }

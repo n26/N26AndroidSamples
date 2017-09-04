@@ -4,18 +4,12 @@ import android.app.Application;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
-import javax.inject.Inject;
-
 import de.n26.n26androidsamples.R;
-import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class N26SamplesApplication extends Application {
 
     private ApplicationComponent component;
-
-    @Inject
-    Timber.Tree loggingTree;
 
     @CallSuper
     @Override
@@ -23,7 +17,6 @@ public class N26SamplesApplication extends Application {
         super.onCreate();
         getComponent().inject(this);
         installFonts();
-        initialize();
     }
 
     @NonNull
@@ -32,15 +25,6 @@ public class N26SamplesApplication extends Application {
             component = DaggerApplicationComponent.builder().application(this).build();
         }
         return component;
-    }
-
-    private void initialize() {
-        initLogging();
-    }
-
-    private void initLogging() {
-        Timber.uprootAll();
-        Timber.plant(loggingTree);
     }
 
     private void installFonts() {

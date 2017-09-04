@@ -42,9 +42,6 @@ dependencies {
     // Calligraphy
     implementation commonDependencies.calligraphy
 
-    // Timber
-    implementation commonDependencies.timber
-
     // Stetho
     implementation developmentDependencies.stetho
     implementation developmentDependencies.stethoOkHttp

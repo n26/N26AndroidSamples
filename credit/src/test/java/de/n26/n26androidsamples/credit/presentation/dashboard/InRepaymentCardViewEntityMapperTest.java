@@ -13,11 +13,11 @@ import android.support.v4.util.Pair;
 import de.n26.n26androidsamples.base.common.utils.CurrencyUtils;
 import de.n26.n26androidsamples.base.common.utils.TimeUtils;
 import de.n26.n26androidsamples.base.presentation.providers.StringProvider;
-import de.n26.n26androidsamples.credit.BaseTest;
 import de.n26.n26androidsamples.credit.R;
 import de.n26.n26androidsamples.credit.data.CreditDataTestUtils;
 import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepaymentInfo;
+import de.n26.n26androidsamples.credit.test_common.BaseTest;
 import polanski.option.Option;
 
 import static de.n26.n26androidsamples.credit.data.CreditDraft.CreditDraftStatus.CONTRACT_PROCESSING;

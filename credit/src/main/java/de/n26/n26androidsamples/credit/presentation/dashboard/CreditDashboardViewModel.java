@@ -35,9 +35,8 @@ public class CreditDashboardViewModel extends ViewModel {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    CreditDashboardViewModel(
-            @NonNull final RetrieveCreditDraftList retrieveCreditDraftList,
-            @NonNull final CreditDisplayableItemMapper creditDisplayableItemMapper) {
+    CreditDashboardViewModel(@NonNull final RetrieveCreditDraftList retrieveCreditDraftList,
+                             @NonNull final CreditDisplayableItemMapper creditDisplayableItemMapper) {
         this.retrieveCreditDraftList = retrieveCreditDraftList;
         this.creditDisplayableItemMapper = creditDisplayableItemMapper;
         // Bind view model

@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.credit;
+package de.n26.n26androidsamples.credit.test_common;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;

@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
-import de.n26.n26androidsamples.credit.BaseTest;
 import de.n26.n26androidsamples.credit.data.CreditDraft;
+import de.n26.n26androidsamples.credit.test_common.BaseTest;
 
 import static de.n26.n26androidsamples.credit.presentation.dashboard.CreditPresentationConstants.DisplayableTypes.IN_REPAYMENT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

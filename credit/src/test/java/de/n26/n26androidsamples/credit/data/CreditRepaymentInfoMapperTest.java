@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import de.n26.n26androidsamples.base.data.EssentialParamMissingException;
-import de.n26.n26androidsamples.credit.BaseTest;
+import de.n26.n26androidsamples.credit.test_common.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

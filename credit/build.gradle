@@ -55,4 +55,5 @@ dependencies {
     testImplementation commonTestDependencies.junit
     testImplementation commonTestDependencies.assertj
     testImplementation commonTestDependencies.mockito
+    testImplementation commonTestDependencies.archTest
 }

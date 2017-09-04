@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.n26.n26androidsamples.base.data.store.ReactiveStore;
-import de.n26.n26androidsamples.credit.BaseTest;
+import de.n26.n26androidsamples.credit.test_common.BaseTest;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import polanski.option.Option;

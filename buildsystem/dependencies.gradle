@@ -82,9 +82,10 @@ ext {
     ]
 
     commonTestDependencies = [
-            junit  : "junit:junit:${junit}",
-            assertj: "org.assertj:assertj-core:${assertJ}",
-            mockito: "org.mockito:mockito-core:${mockito}",
+            junit   : "junit:junit:${junit}",
+            assertj : "org.assertj:assertj-core:${assertJ}",
+            mockito : "org.mockito:mockito-core:${mockito}",
+            archTest: "android.arch.core:core-testing:${archLifecycle}"
     ]
 
     developmentDependencies = [

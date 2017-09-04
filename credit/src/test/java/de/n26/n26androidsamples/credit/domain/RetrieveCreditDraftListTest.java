@@ -10,10 +10,10 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.n26.n26androidsamples.credit.BaseTest;
 import de.n26.n26androidsamples.credit.data.CreditDataTestUtils;
 import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
+import de.n26.n26androidsamples.credit.test_common.BaseTest;
 import io.reactivex.Completable;
 import io.reactivex.processors.BehaviorProcessor;
 import io.reactivex.subscribers.TestSubscriber;

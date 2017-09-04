@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Write tests for this
 public final class ListUtils {
 
     /**

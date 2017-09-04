@@ -8,9 +8,8 @@ import javax.inject.Inject;
 public class CurrencyUtils {
 
     @Inject
-    public CurrencyUtils() { }
+    CurrencyUtils() { }
 
-    //TODO: Document
     public String formatAmount(final double amount) {
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(amount);
     }

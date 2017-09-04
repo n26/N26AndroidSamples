@@ -51,7 +51,7 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
         androidPreconditions.assertWorkerThread();
 
         final Key key = extractKeyFromModel.call(model);
-        cache.put(model);
+        cache.putSingular(model);
         getOrCreateSubjectForKey(key).onNext(ofObj(model));
         // One item has been added/updated, notify to all as well
         final Option<List<Value>> allValues = cache.getAll().map(Option::ofObj).blockingGet(none());
@@ -79,7 +79,7 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     public Flowable<Option<Value>> getSingular(@NonNull final Key key) {
         androidPreconditions.assertWorkerThread();
 
-        final Option<Value> model = cache.get(key).map(Option::ofObj).blockingGet(none());
+        final Option<Value> model = cache.getSingular(key).map(Option::ofObj).blockingGet(none());
         return getOrCreateSubjectForKey(key).startWith(model);
     }
 
@@ -117,7 +117,7 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
             keySet = new HashSet<>(processorMap.keySet());
         }
         for (Key key : keySet) {
-            final Option<Value> value = cache.get(key).map(Option::ofObj).blockingGet(none());
+            final Option<Value> value = cache.getSingular(key).map(Option::ofObj).blockingGet(none());
             publishInKey(key, value);
         }
     }

@@ -14,14 +14,14 @@ import io.reactivex.Maybe;
  */
 public interface Store<Key, Value> {
 
-    void put(@NonNull final Value value);
+    void putSingular(@NonNull final Value value);
 
     void putAll(@NonNull final List<Value> valueList);
 
     void clear();
 
     @NonNull
-    Maybe<Value> get(@NonNull final Key key);
+    Maybe<Value> getSingular(@NonNull final Key key);
 
     @NonNull
     Maybe<List<Value>> getAll();

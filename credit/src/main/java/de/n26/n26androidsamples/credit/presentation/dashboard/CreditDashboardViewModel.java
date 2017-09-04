@@ -26,7 +26,7 @@ public class CreditDashboardViewModel extends ViewModel {
     private final RetrieveCreditDraftList retrieveCreditDraftList;
 
     @NonNull
-    private final CreditDisplayableItemFlatMapper creditDisplayableItemFlatMapper;
+    private final CreditDisplayableItemMapper creditDisplayableItemMapper;
 
     @NonNull
     private final MutableLiveData<List<DisplayableItem>> creditListLiveData = new MutableLiveData<>();
@@ -37,9 +37,9 @@ public class CreditDashboardViewModel extends ViewModel {
     @Inject
     CreditDashboardViewModel(
             @NonNull final RetrieveCreditDraftList retrieveCreditDraftList,
-            @NonNull final CreditDisplayableItemFlatMapper creditDisplayableItemFlatMapper) {
+            @NonNull final CreditDisplayableItemMapper creditDisplayableItemMapper) {
         this.retrieveCreditDraftList = retrieveCreditDraftList;
-        this.creditDisplayableItemFlatMapper = creditDisplayableItemFlatMapper;
+        this.creditDisplayableItemMapper = creditDisplayableItemMapper;
         // Bind view model
         compositeDisposable.add(bindToCreditDrafts());
     }
@@ -59,7 +59,7 @@ public class CreditDashboardViewModel extends ViewModel {
     private Disposable bindToCreditDrafts() {
         return retrieveCreditDraftList.getBehaviorStream(none())
                                       .observeOn(Schedulers.computation())
-                                      .flatMapSingle(creditDisplayableItemFlatMapper)
+                                      .map(creditDisplayableItemMapper)
                                       .subscribe(creditListLiveData::postValue,
                                                  e -> Log.e(TAG, "Error updating credit list live data", e));
     }

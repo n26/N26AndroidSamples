@@ -22,7 +22,7 @@ public class TimeUtils {
      */
     @NonNull
     public String formatDateString(@NonNull final String dateString, @NonNull final String formatPattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(formatPattern, Locale.GERMAN);
+        SimpleDateFormat sdf = new SimpleDateFormat(formatPattern, Locale.ENGLISH);
         Date date = parseStringToDateWithPassedPattern(dateString, "yyyy-MM-dd");
         return sdf.format(date);
     }

@@ -3,6 +3,8 @@ package de.n26.n26androidsamples.credit.data;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapterFactory;
 
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -13,6 +15,7 @@ import de.n26.n26androidsamples.base.data.cache.Cache;
 import de.n26.n26androidsamples.base.data.store.MemoryReactiveStore;
 import de.n26.n26androidsamples.base.data.store.ReactiveStore;
 import de.n26.n26androidsamples.base.data.store.Store;
+import de.n26.n26androidsamples.base.injection.qualifiers.ForApplication;
 
 @Module
 public class CreditDataModule {
@@ -25,14 +28,9 @@ public class CreditDataModule {
         return CreditTypeAdapterFactory.create();
     }
 
-//    @Provides
-//    CreditService provideCreditService(Retrofit retrofit) {
-//        return retrofit.create(CreditService.class);
-//    }
-
     @Provides
-    CreditService provideMockCreditService(Gson gson) {
-        return new MockCreditService(gson);
+    CreditService provideMockCreditService(Gson gson, @ForApplication Context context) {
+        return new MockCreditService(gson, context);
     }
 
     @Provides

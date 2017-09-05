@@ -1,50 +1,42 @@
 package de.n26.n26androidsamples.credit.data;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.util.Collections;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
+import de.n26.n26androidsamples.credit.R;
 import io.reactivex.Single;
 
 class MockCreditService implements CreditService {
 
+    private static final String TAG = MockCreditService.class.getSimpleName();
     @NonNull
     private final Gson gson;
 
-    MockCreditService(@NonNull final Gson gson) {
+    @NonNull
+    private final Context context;
+
+    MockCreditService(@NonNull final Gson gson, @NonNull final Context context) {
         this.gson = gson;
+        this.context = context;
     }
 
     @Override
     public Single<List<CreditDraftRaw>> getCreditDrafts() {
-        return Single.just(Collections.singletonList(creditDraftSummaryRawTestBuilder().status("IN_REPAYMENT").build()));
-    }
-
-    static CreditDraftRaw.Builder creditDraftSummaryRawTestBuilder() {
-        return CreditDraftRaw.builder()
-                             .amount(0.0)
-                             .id("ID")
-                             .imageUrl("imageUrl")
-                             .dayOfMonth(1)
-                             .purposeId(2)
-                             .purposeName("purpose")
-                             .status("status")
-                             .updated("date")
-                             .repaymentInfo(creditRepaymentInfoRawTestBuilder().build());
-    }
-
-    static CreditRepaymentInfoRaw.Builder creditRepaymentInfoRawTestBuilder() {
-        return CreditRepaymentInfoRaw.builder()
-                                     .disbursedDate("2017-08-07T17:53:55.07+02:00")
-                                     .nextPaymentDate("2017-08-07T17:53:55.07+02:00")
-                                     .nextPayment(400.0)
-                                     .currentInstalment(5)
-                                     .totalInstalments(10)
-                                     .totalToRepay(10000d)
-                                     .totalRemaining(5984.74)
-                                     .totalPaid(4015.26);
+        Type listType = new TypeToken<ArrayList<CreditDraftRaw>>() {}.getType();
+        try {
+            return Single.just(gson.fromJson(new InputStreamReader(context.getResources().openRawResource(R.raw.credit_drafts), "UTF-8"),
+                                             listType));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException(TAG + ": Error parsing from file credit_drafts.json");
+        }
     }
 }

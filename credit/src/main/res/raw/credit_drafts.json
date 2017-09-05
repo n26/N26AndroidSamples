@@ -1,0 +1,45 @@
+[
+  {
+    "id": "3e9f881f-3f31-40a5-b731-e01e9d4125b8",
+    "status": "IN_REPAYMENT",
+    "amount": 15600,
+    "purposeId": 2,
+    "purposeName": "Housing / Furniture",
+    "imageUrl": "https://s3.eu-central-1.amazonaws.com/consumercredit-staging/furniture-purpose-2x.png",
+    "dayOfMonth": 0,
+    "moreInfoNeeded": false,
+    "updated": "2017-08-07T17:53:55.07+02:00",
+    "repaymentInfo": {
+      "disbursedDate": "2017-08-07T17:53:42.172+02:00",
+      "nextPayment": 419.8,
+      "nextPaymentDate": "2017-09-01T15:36:56.714+02:00",
+      "currentInstalment": 0,
+      "totalInstalments": 48,
+      "totalToRepay": 15600,
+      "totalRemaining": 15600,
+      "totalPaid": 0
+    }
+  },
+
+  {
+    "id": "3e9f881f-3f31-40a5-b731-e01e9d4125b8",
+    "status": "IN_REPAYMENT",
+    "amount": 10800,
+    "purposeId": 3,
+    "purposeName": "Car and automotive",
+    "imageUrl": "https://s3.eu-central-1.amazonaws.com/consumercredit-staging/transportation-purposeName-2x.png",
+    "dayOfMonth": 0,
+    "moreInfoNeeded": false,
+    "updated": "2017-09-05T11:34:55.07+02:00",
+    "repaymentInfo": {
+      "disbursedDate": "2017-07-01T17:53:42.172+02:00",
+      "nextPayment": 520.6,
+      "nextPaymentDate": "2017-10-01T15:36:56.714+02:00",
+      "currentInstalment": 4,
+      "totalInstalments": 48,
+      "totalToRepay": 10800,
+      "totalRemaining": 9238.2,
+      "totalPaid": 1561.8
+    }
+  }
+]

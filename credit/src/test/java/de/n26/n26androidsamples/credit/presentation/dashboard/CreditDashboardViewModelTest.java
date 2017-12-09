@@ -37,6 +37,9 @@ public class CreditDashboardViewModelTest extends BaseTest {
 
     private ArrangeBuilder arrangeBuilder;
 
+    @Rule
+    public InstantTaskExecutorRule otherRule = new InstantTaskExecutorRule();
+
     @Before
     public void setUp() {
         arrangeBuilder = new ArrangeBuilder();
@@ -54,7 +57,6 @@ public class CreditDashboardViewModelTest extends BaseTest {
         Mockito.verify(mapper).apply(creditDrafts);
     }
 
-    @Ignore
     @Test
     public void displayableItemsGoIntoLiveDataWhenInteractorEmitsCreditDrafts() throws Exception {
         List<DisplayableItem> displayableItems = Collections.singletonList(Mockito.mock(DisplayableItem.class));
@@ -63,7 +65,6 @@ public class CreditDashboardViewModelTest extends BaseTest {
         arrangeBuilder.withMappedDisplayableItems(displayableItems)
                       .interactorEmitsCreditDrafts(creditDrafts);
 
-        // FIXME: The LiveData is not receiving the value! Figure out how to unit test LiveData.
         assertThat(viewModel.getCreditListLiveData().getValue()).isEqualTo(displayableItems);
     }
 

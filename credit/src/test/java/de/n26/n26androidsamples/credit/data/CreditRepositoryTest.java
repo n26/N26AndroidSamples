@@ -12,6 +12,7 @@ import java.util.List;
 import de.n26.n26androidsamples.base.data.store.ReactiveStore;
 import de.n26.n26androidsamples.credit.test_common.BaseTest;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import polanski.option.Option;
 
@@ -36,11 +37,11 @@ public class CreditRepositoryTest extends BaseTest {
     }
 
     @Test
-    public void getAllCreditDraftsReturnsStoreFlowable() {
-        Flowable<Option<List<CreditDraft>>> storeFlowable = Flowable.empty();
-        new ArrangeBuilder().withFlowableFromStore(storeFlowable);
+    public void getAllCreditDraftsReturnsStoreObservable() {
+        Observable<Option<List<CreditDraft>>> storeObservable = Observable.empty();
+        new ArrangeBuilder().withObservableFromStore(storeObservable);
 
-        assertThat(repository.getAllCreditDrafts()).isEqualTo(storeFlowable);
+        assertThat(repository.getAllCreditDrafts()).isEqualTo(storeObservable);
     }
 
     @Test
@@ -85,8 +86,8 @@ public class CreditRepositoryTest extends BaseTest {
 
     private class ArrangeBuilder {
 
-        private ArrangeBuilder withFlowableFromStore(Flowable<Option<List<CreditDraft>>> flowable) {
-            Mockito.when(store.getAll()).thenReturn(flowable);
+        private ArrangeBuilder withObservableFromStore(Observable<Option<List<CreditDraft>>> observable) {
+            Mockito.when(store.getAll()).thenReturn(observable);
             return this;
         }
 

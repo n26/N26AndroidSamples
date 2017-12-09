@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import polanski.option.Option;
 
 /**
@@ -18,7 +18,7 @@ public interface ReactiveStore<Key, Value> {
 
     void replaceAll(@NonNull final List<Value> modelList);
 
-    Flowable<Option<Value>> getSingular(@NonNull final Key key);
+    Observable<Option<Value>> getSingular(@NonNull final Key key);
 
-    Flowable<Option<List<Value>>> getAll();
+    Observable<Option<List<Value>>> getAll();
 }

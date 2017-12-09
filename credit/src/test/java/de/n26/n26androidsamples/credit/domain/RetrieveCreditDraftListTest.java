@@ -15,7 +15,9 @@ import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
 import de.n26.n26androidsamples.credit.test_common.BaseTest;
 import io.reactivex.Completable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.processors.BehaviorProcessor;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subscribers.TestSubscriber;
 import polanski.option.Option;
 
@@ -31,13 +33,13 @@ public class RetrieveCreditDraftListTest extends BaseTest {
 
     private ArrangeBuilder arrangeBuilder;
 
-    private TestSubscriber<List<CreditDraft>> ts;
+    private TestObserver<List<CreditDraft>> ts;
 
     @Before
     public void setUp() {
         interactor = new RetrieveCreditDraftList(creditRepository);
         arrangeBuilder = new ArrangeBuilder();
-        ts = new TestSubscriber<>();
+        ts = new TestObserver<>();
     }
 
     @Test
@@ -95,7 +97,7 @@ public class RetrieveCreditDraftListTest extends BaseTest {
 
     private class ArrangeBuilder {
 
-        private BehaviorProcessor<Option<List<CreditDraft>>> repoCreditDraftStream = BehaviorProcessor.create();
+        private BehaviorSubject<Option<List<CreditDraft>>> repoCreditDraftStream = BehaviorSubject.create();
 
         private ArrangeBuilder() {
             when(creditRepository.getAllCreditDrafts()).thenReturn(repoCreditDraftStream);

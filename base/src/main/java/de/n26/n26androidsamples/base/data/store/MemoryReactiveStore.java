@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import io.reactivex.Flowable;
-import io.reactivex.processors.FlowableProcessor;
-import io.reactivex.processors.PublishProcessor;
+import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 import polanski.option.Option;
 import polanski.option.function.Func1;
 
@@ -30,14 +30,14 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     private final Func1<Value, Key> extractKeyFromModel;
 
     @NonNull
-    private final FlowableProcessor<Option<List<Value>>> allProcessor;
+    private final Subject<Option<List<Value>>> allSubject;
 
     @NonNull
-    private final Map<Key, FlowableProcessor<Option<Value>>> processorMap = new HashMap<>();
+    private final Map<Key, Subject<Option<Value>>> subjectMap = new HashMap<>();
 
     public MemoryReactiveStore(@NonNull final Func1<Value, Key> extractKeyFromModel,
                                @NonNull final Store.MemoryStore<Key, Value> cache) {
-        this.allProcessor = PublishProcessor.<Option<List<Value>>>create().toSerialized();
+        this.allSubject = PublishSubject.<Option<List<Value>>>create().toSerialized();
         this.cache = cache;
         this.extractKeyFromModel = extractKeyFromModel;
     }
@@ -48,12 +48,12 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
         getOrCreateSubjectForKey(key).onNext(ofObj(model));
         // One item has been added/updated, notify to all as well
         final Option<List<Value>> allValues = cache.getAll().map(Option::ofObj).blockingGet(none());
-        allProcessor.onNext(allValues);
+        allSubject.onNext(allValues);
     }
 
     public void storeAll(@NonNull final List<Value> modelList) {
         cache.putAll(modelList);
-        allProcessor.onNext(ofObj(modelList));
+        allSubject.onNext(ofObj(modelList));
         // Publish in all the existing single item streams.
         // This could be improved publishing only in the items that changed. Maybe use DiffUtils?
         publishInEachKey();
@@ -65,31 +65,39 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     }
 
     @NonNull
-    public Flowable<Option<Value>> getSingular(@NonNull final Key key) {
-        final Option<Value> model = cache.getSingular(key).map(Option::ofObj).blockingGet(none());
-        return getOrCreateSubjectForKey(key).startWith(model)
-                                            .observeOn(Schedulers.computation());
+    public Observable<Option<Value>> getSingular(@NonNull final Key key) {
+        return Observable.defer(() -> getOrCreateSubjectForKey(key).startWith(getValue(key)))
+                         .observeOn(Schedulers.computation());
     }
 
     @NonNull
-    public Flowable<Option<List<Value>>> getAll() {
-        final Option<List<Value>> allValues = cache.getAll().map(Option::ofObj).blockingGet(none());
-        return allProcessor.startWith(allValues)
-                           .observeOn(Schedulers.computation());
+    public Observable<Option<List<Value>>> getAll() {
+        return Observable.defer(() -> allSubject.startWith(getAllValues()))
+                         .observeOn(Schedulers.computation());
     }
 
     @NonNull
-    private FlowableProcessor<Option<Value>> getOrCreateSubjectForKey(@NonNull final Key key) {
-        synchronized (processorMap) {
-            return ofObj(processorMap.get(key)).orDefault(() -> createAndStoreNewSubjectForKey(key));
+    private Option<Value> getValue(@NonNull final Key key) {
+        return cache.getSingular(key).map(Option::ofObj).blockingGet(none());
+    }
+
+    @NonNull
+    private Option<List<Value>> getAllValues() {
+        return cache.getAll().map(Option::ofObj).blockingGet(none());
+    }
+
+    @NonNull
+    private Subject<Option<Value>> getOrCreateSubjectForKey(@NonNull final Key key) {
+        synchronized (subjectMap) {
+            return ofObj(subjectMap.get(key)).orDefault(() -> createAndStoreNewSubjectForKey(key));
         }
     }
 
     @NonNull
-    private FlowableProcessor<Option<Value>> createAndStoreNewSubjectForKey(@NonNull final Key key) {
-        final FlowableProcessor<Option<Value>> processor = PublishProcessor.<Option<Value>>create().toSerialized();
-        synchronized (processorMap) {
-            processorMap.put(key, processor);
+    private Subject<Option<Value>> createAndStoreNewSubjectForKey(@NonNull final Key key) {
+        final Subject<Option<Value>> processor = PublishSubject.<Option<Value>>create().toSerialized();
+        synchronized (subjectMap) {
+            subjectMap.put(key, processor);
         }
         return processor;
     }
@@ -99,8 +107,8 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
      */
     private void publishInEachKey() {
         final Set<Key> keySet;
-        synchronized (processorMap) {
-            keySet = new HashSet<>(processorMap.keySet());
+        synchronized (subjectMap) {
+            keySet = new HashSet<>(subjectMap.keySet());
         }
         for (Key key : keySet) {
             final Option<Value> value = cache.getSingular(key).map(Option::ofObj).blockingGet(none());
@@ -113,9 +121,9 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
      means that the data for this key is not being consumed and therefore there is no need to publish.
      */
     private void publishInKey(@NonNull final Key key, @NonNull final Option<Value> model) {
-        final FlowableProcessor<Option<Value>> processor;
-        synchronized (processorMap) {
-            processor = processorMap.get(key);
+        final Subject<Option<Value>> processor;
+        synchronized (subjectMap) {
+            processor = subjectMap.get(key);
         }
         ofObj(processor).ifSome(it -> it.onNext(model));
     }

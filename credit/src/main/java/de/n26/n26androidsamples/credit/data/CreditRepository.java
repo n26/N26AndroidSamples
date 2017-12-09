@@ -36,7 +36,7 @@ public class CreditRepository {
     }
 
     @NonNull
-    public Flowable<Option<List<CreditDraft>>> getAllCreditDrafts() {
+    public Observable<Option<List<CreditDraft>>> getAllCreditDrafts() {
         return store.getAll();
     }
 

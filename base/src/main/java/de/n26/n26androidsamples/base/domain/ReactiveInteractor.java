@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import polanski.option.Option;
 
@@ -36,7 +37,7 @@ public interface ReactiveInteractor {
     interface RetrieveInteractor<Params, Object> extends ReactiveInteractor {
 
         @NonNull
-        Flowable<Object> getBehaviorStream(@NonNull final Option<Params> params);
+        Observable<Object> getBehaviorStream(@NonNull final Option<Params> params);
     }
 
     /**

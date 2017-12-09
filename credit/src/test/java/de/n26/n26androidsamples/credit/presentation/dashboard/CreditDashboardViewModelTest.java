@@ -1,7 +1,6 @@
 package de.n26.n26androidsamples.credit.presentation.dashboard;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,8 +15,7 @@ import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
 import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftList;
 import de.n26.n26androidsamples.credit.test_common.BaseTest;
-import io.reactivex.processors.BehaviorProcessor;
-import io.reactivex.processors.FlowableProcessor;
+import io.reactivex.subjects.BehaviorSubject;
 import polanski.option.Option;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -70,14 +68,14 @@ public class CreditDashboardViewModelTest extends BaseTest {
 
     private class ArrangeBuilder {
 
-        FlowableProcessor<List<CreditDraft>> interactorFlowable = BehaviorProcessor.create();
+        BehaviorSubject<List<CreditDraft>> interactorSubject = BehaviorSubject.create();
 
         private ArrangeBuilder() {
-            Mockito.when(interactor.getBehaviorStream(Option.none())).thenReturn(interactorFlowable);
+            Mockito.when(interactor.getBehaviorStream(Option.none())).thenReturn(interactorSubject);
         }
 
         private ArrangeBuilder interactorEmitsCreditDrafts(List<CreditDraft> creditDrafts) {
-            interactorFlowable.onNext(creditDrafts);
+            interactorSubject.onNext(creditDrafts);
             return this;
         }
 

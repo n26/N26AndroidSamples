@@ -11,7 +11,7 @@ import de.n26.n26androidsamples.base.domain.ReactiveInteractor.RetrieveInteracto
 import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.data.CreditRepository;
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import polanski.option.Option;
 
@@ -35,7 +35,7 @@ public class RetrieveCreditDraftList implements RetrieveInteractor<Void, List<Cr
      */
     @NonNull
     @Override
-    public Flowable<List<CreditDraft>> getBehaviorStream(@NonNull final Option<Void> params) {
+    public Observable<List<CreditDraft>> getBehaviorStream(@NonNull final Option<Void> params) {
         return creditRepository.getAllCreditDrafts()
                                // fetch if emited value is none
                                .flatMapSingle(this::fetchWhenNoneAndThenDrafts)
@@ -51,7 +51,7 @@ public class RetrieveCreditDraftList implements RetrieveInteractor<Void, List<Cr
     @NonNull
     private Completable fetchWhenNone(@NonNull final Option<List<CreditDraft>> drafts) {
         return drafts.isNone()
-                ? creditRepository.fetchCreditDrafts()
-                : Completable.complete();
+               ? creditRepository.fetchCreditDrafts()
+               : Completable.complete();
     }
 }

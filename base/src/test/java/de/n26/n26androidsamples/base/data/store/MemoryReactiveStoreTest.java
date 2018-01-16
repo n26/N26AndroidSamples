@@ -12,6 +12,8 @@ import java.util.List;
 import de.n26.n26androidsamples.base.BaseTest;
 import de.n26.n26androidsamples.base.data.cache.Cache;
 import io.reactivex.Maybe;
+import io.reactivex.observers.TestObserver;
+import polanski.option.Option;
 
 import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
@@ -46,43 +48,53 @@ public class MemoryReactiveStoreTest extends BaseTest {
         reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void streamsEmitWhenSingleObjectIsStored() {
         List<TestObject> list = createTestObjectList();
         TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withCachedObjectList(list)
-                            .withCachedObject(model);
+        new ArrangeBuilder().withEmptyCache();
+        TestObserver<Option<TestObject>> singleTestObserver = reactiveStore.getSingular("ID1").test();
+        TestObserver<Option<List<TestObject>>> listTestObserver = reactiveStore.getAll().test();
+        new ArrangeBuilder().withCachedObjectList(list);
 
         reactiveStore.storeSingular(model);
 
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
-        reactiveStore.getAll().test().assertValue(ofObj(list));
+        singleTestObserver.assertValues(none(), ofObj(model));
+        listTestObserver.assertValues(none(), ofObj(list));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void streamsEmitWhenObjectListIsStored() {
         List<TestObject> list = createTestObjectList();
         TestObject model = new TestObject("ID1");
+        new ArrangeBuilder().withEmptyCache();
+        TestObserver<Option<TestObject>> singleTestObserver = reactiveStore.getSingular("ID1").test();
+        TestObserver<Option<List<TestObject>>> listTestObserver = reactiveStore.getAll().test();
         new ArrangeBuilder().withCachedObjectList(list)
                             .withCachedObject(model);
 
         reactiveStore.storeAll(list);
 
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
-        reactiveStore.getAll().test().assertValue(ofObj(list));
+        singleTestObserver.assertValues(none(), ofObj(model));
+        listTestObserver.assertValues(none(), ofObj(list));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void streamsEmitWhenObjectListIsReplaced() {
         List<TestObject> list = createTestObjectList();
         TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withCachedObjectList(list)
-                            .withCachedObject(model);
+        new ArrangeBuilder().withEmptyCache();
+        TestObserver<Option<TestObject>> singleTestObserver = reactiveStore.getSingular("ID1").test();
+        TestObserver<Option<List<TestObject>>> listTestObserver = reactiveStore.getAll().test();
+        new ArrangeBuilder().withCachedObject(model);
 
         reactiveStore.replaceAll(list);
 
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
-        reactiveStore.getAll().test().assertValue(ofObj(list));
+        singleTestObserver.assertValues(none(), ofObj(model));
+        listTestObserver.assertValues(none(), ofObj(list));
     }
 
     @Test

@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.n26.n26androidsamples.base.BaseTest;
-import io.reactivex.Flowable;
-import io.reactivex.subscribers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import polanski.option.Option;
 
 public class UnwrapOptionTransformerTest extends BaseTest {
@@ -19,9 +19,9 @@ public class UnwrapOptionTransformerTest extends BaseTest {
 
     @Test
     public void transformerFiltersOutNone() {
-        Flowable<Option<Object>> source = Flowable.just(Option.none());
+        Observable<Option<Object>> source = Observable.just(Option.none());
 
-        TestSubscriber<Object> ts = new TestSubscriber<>();
+        TestObserver<Object> ts = new TestObserver<>();
         transformer.apply(source).subscribe(ts);
 
         ts.assertNoValues();
@@ -30,11 +30,10 @@ public class UnwrapOptionTransformerTest extends BaseTest {
     @Test
     public void transformerUnwrapsSome() {
         Object object = new Object();
-        Flowable<Option<Object>> source = Flowable.just(Option.ofObj(object));
+        Observable<Option<Object>> source = Observable.just(Option.ofObj(object));
 
-        TestSubscriber<Object> ts = new TestSubscriber<>();
+        TestObserver<Object> ts = new TestObserver<>();
         transformer.apply(source).subscribe(ts);
-
         ts.assertValue(object);
     }
 }

@@ -48,53 +48,71 @@ public class MemoryReactiveStoreTest extends BaseTest {
         reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
-    public void streamsEmitWhenSingleObjectIsStored() {
-        List<TestObject> list = createTestObjectList();
+    public void singularStreamEmitsWhenSingleObjectIsStored() {
         TestObject model = new TestObject("ID1");
         new ArrangeBuilder().withEmptyCache();
-        TestObserver<Option<TestObject>> singleTestObserver = reactiveStore.getSingular("ID1").test();
-        TestObserver<Option<List<TestObject>>> listTestObserver = reactiveStore.getAll().test();
-        new ArrangeBuilder().withCachedObjectList(list);
 
+        TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
         reactiveStore.storeSingular(model);
 
-        singleTestObserver.assertValues(none(), ofObj(model));
-        listTestObserver.assertValues(none(), ofObj(list));
+        to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
-    public void streamsEmitWhenObjectListIsStored() {
+    public void allStreamEmitsWhenSingleObjectIsStored() {
         List<TestObject> list = createTestObjectList();
-        TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withEmptyCache();
-        TestObserver<Option<TestObject>> singleTestObserver = reactiveStore.getSingular("ID1").test();
-        TestObserver<Option<List<TestObject>>> listTestObserver = reactiveStore.getAll().test();
-        new ArrangeBuilder().withCachedObjectList(list)
-                            .withCachedObject(model);
+        new ArrangeBuilder().withCachedObjectList(list);
 
-        reactiveStore.storeAll(list);
+        TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
+        reactiveStore.storeSingular(new TestObject(""));
 
-        singleTestObserver.assertValues(none(), ofObj(model));
-        listTestObserver.assertValues(none(), ofObj(list));
+        Mockito.verify(cache, Mockito.times(2)).getAll();
+        to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
-    public void streamsEmitWhenObjectListIsReplaced() {
-        List<TestObject> list = createTestObjectList();
+    public void singularStreamEmitsWhenObjectListIsStored() {
         TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withEmptyCache();
-        TestObserver<Option<TestObject>> singleTestObserver = reactiveStore.getSingular("ID1").test();
-        TestObserver<Option<List<TestObject>>> listTestObserver = reactiveStore.getAll().test();
         new ArrangeBuilder().withCachedObject(model);
 
+        TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
+        reactiveStore.storeAll(createTestObjectList());
+
+        to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
+    }
+
+    @Test
+    public void allStreamEmitsWhenObjectListIsStored() {
+        List<TestObject> list = createTestObjectList();
+        new ArrangeBuilder().withCachedObjectList(list);
+
+        TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
+        reactiveStore.storeAll(list);
+
+        to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
+    }
+
+    @Test
+    public void singularStreamEmitsWhenObjectListIsReplaced() {
+        TestObject model = new TestObject("ID1");
+        new ArrangeBuilder().withCachedObject(model);
+
+        TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
+        reactiveStore.replaceAll(createTestObjectList());
+
+        to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
+    }
+
+    @Test
+    public void allStreamEmitsWhenObjectListIsReplaced() {
+        List<TestObject> list = createTestObjectList();
+        new ArrangeBuilder().withCachedObjectList(list);
+
+        TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
         reactiveStore.replaceAll(list);
 
-        singleTestObserver.assertValues(none(), ofObj(model));
-        listTestObserver.assertValues(none(), ofObj(list));
+        to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
     }
 
     @Test

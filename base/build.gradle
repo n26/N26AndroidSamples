@@ -49,11 +49,10 @@ dependencies {
     implementation commonDependencies.calligraphy
 
     // Architecture components
-    api commonDependencies.archLifecycleRuntime
-    api commonDependencies.archLifecycleExtensions
-    api commonDependencies.archLifecycleReactiveStreams
-    annotationProcessor commonDependencies.archLifecycleCompiler
-    testAnnotationProcessor commonDependencies.archLifecycleCompiler
+    api commonDependencies.architectureComponentsExtensions
+    api commonDependencies.architectureComponentsReactiveStreams
+    annotationProcessor commonDependencies.architectureComponentsCompiler
+    testImplementation commonTestDependencies.architectureComponentsTesting
 
     // Dagger 2
     api commonDependencies.dagger2

@@ -1,15 +1,15 @@
 package de.n26.n26androidsamples.base.presentation;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class BaseInjectingFragment extends LifecycleFragment {
+public abstract class BaseInjectingFragment extends Fragment {
 
     @Override
     public void onAttach(final Context context) {

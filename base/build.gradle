@@ -50,7 +50,6 @@ dependencies {
 
     // Architecture components
     api commonDependencies.architectureComponentsExtensions
-    api commonDependencies.architectureComponentsReactiveStreams
     annotationProcessor commonDependencies.architectureComponentsCompiler
     testImplementation commonTestDependencies.architectureComponentsTesting
 

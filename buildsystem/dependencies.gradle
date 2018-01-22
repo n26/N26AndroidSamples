@@ -59,7 +59,6 @@ ext {
 
             architectureComponentsExtensions     : "android.arch.lifecycle:extensions:${architectureComponents}",
             architectureComponentsCompiler       : "android.arch.lifecycle:compiler:${architectureComponents}",
-            architectureComponentsReactiveStreams: "android.arch.lifecycle:reactivestreams:${architectureComponents}",
 
             autoValue                            : "com.google.auto.value:auto-value:${autoValue}",
             autoValueGson                        : "com.ryanharter.auto.value:auto-value-gson:${autoValueGson}",

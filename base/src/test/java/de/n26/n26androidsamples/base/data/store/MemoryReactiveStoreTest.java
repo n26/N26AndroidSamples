@@ -12,6 +12,8 @@ import java.util.List;
 import de.n26.n26androidsamples.base.BaseTest;
 import de.n26.n26androidsamples.base.data.cache.Cache;
 import io.reactivex.Maybe;
+import io.reactivex.observers.TestObserver;
+import polanski.option.Option;
 
 import static polanski.option.Option.none;
 import static polanski.option.Option.ofObj;
@@ -47,42 +49,70 @@ public class MemoryReactiveStoreTest extends BaseTest {
     }
 
     @Test
-    public void streamsEmitWhenSingleObjectIsStored() {
-        List<TestObject> list = createTestObjectList();
+    public void singularStreamEmitsWhenSingleObjectIsStored() {
         TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withCachedObjectList(list)
-                            .withCachedObject(model);
+        new ArrangeBuilder().withEmptyCache();
 
+        TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
         reactiveStore.storeSingular(model);
 
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
-        reactiveStore.getAll().test().assertValue(ofObj(list));
+        to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
     }
 
     @Test
-    public void streamsEmitWhenObjectListIsStored() {
+    public void allStreamEmitsWhenSingleObjectIsStored() {
         List<TestObject> list = createTestObjectList();
-        TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withCachedObjectList(list)
-                            .withCachedObject(model);
+        new ArrangeBuilder().withCachedObjectList(list);
 
+        TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
+        reactiveStore.storeSingular(new TestObject(""));
+
+        Mockito.verify(cache, Mockito.times(2)).getAll();
+        to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
+    }
+
+    @Test
+    public void singularStreamEmitsWhenObjectListIsStored() {
+        TestObject model = new TestObject("ID1");
+        new ArrangeBuilder().withCachedObject(model);
+
+        TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
+        reactiveStore.storeAll(createTestObjectList());
+
+        to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
+    }
+
+    @Test
+    public void allStreamEmitsWhenObjectListIsStored() {
+        List<TestObject> list = createTestObjectList();
+        new ArrangeBuilder().withCachedObjectList(list);
+
+        TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
         reactiveStore.storeAll(list);
 
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
-        reactiveStore.getAll().test().assertValue(ofObj(list));
+        to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
     }
 
     @Test
-    public void streamsEmitWhenObjectListIsReplaced() {
-        List<TestObject> list = createTestObjectList();
+    public void singularStreamEmitsWhenObjectListIsReplaced() {
         TestObject model = new TestObject("ID1");
-        new ArrangeBuilder().withCachedObjectList(list)
-                            .withCachedObject(model);
+        new ArrangeBuilder().withCachedObject(model);
 
+        TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
+        reactiveStore.replaceAll(createTestObjectList());
+
+        to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
+    }
+
+    @Test
+    public void allStreamEmitsWhenObjectListIsReplaced() {
+        List<TestObject> list = createTestObjectList();
+        new ArrangeBuilder().withCachedObjectList(list);
+
+        TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
         reactiveStore.replaceAll(list);
 
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
-        reactiveStore.getAll().test().assertValue(ofObj(list));
+        to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
     }
 
     @Test

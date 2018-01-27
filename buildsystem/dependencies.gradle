@@ -10,8 +10,9 @@ ext {
     // Libraries
     rxJava2 = '2.1.0'
     rxAndroid = '2.0.1'
-    archLifecycle = '1.0.0-alpha9'
-    supportLibrary = '26.0.0'
+    architectureComponents = '1.0.0'
+    room = '1.0.0'
+    supportLibrary = '27.0.2'
     constraintLayout = '1.0.2'
     dagger2 = '2.11'
     javaxAnnotation = '10.0-b28'
@@ -24,7 +25,6 @@ ext {
     autoValue = '1.4.1'
     autoValueGson = '0.5.0'
     options = '1.3.0'
-    roomVersion = '1.0.0-alpha4'
 
     // Instrumentation
     stetho = '1.5.0'
@@ -37,55 +37,54 @@ ext {
     assertJ = '3.8.0'
 
     commonDependencies = [
-            rxJava2                     : "io.reactivex.rxjava2:rxjava:${rxJava2}",
-            rxAndroid                   : "io.reactivex.rxjava2:rxandroid:${rxAndroid}",
+            rxJava2                         : "io.reactivex.rxjava2:rxjava:${rxJava2}",
+            rxAndroid                       : "io.reactivex.rxjava2:rxandroid:${rxAndroid}",
 
-            dagger2Compiler             : "com.google.dagger:dagger-compiler:${dagger2}",
-            dagger2                     : "com.google.dagger:dagger:${dagger2}",
-            javaxAnnotation             : "org.glassfish:javax.annotation:${javaxAnnotation}",
+            dagger2Compiler                 : "com.google.dagger:dagger-compiler:${dagger2}",
+            dagger2                         : "com.google.dagger:dagger:${dagger2}",
+            javaxAnnotation                 : "org.glassfish:javax.annotation:${javaxAnnotation}",
 
-            supportAppCompatV7          : "com.android.support:appcompat-v7:${supportLibrary}",
-            supportDesign               : "com.android.support:design:${supportLibrary}",
-            supportV13                  : "com.android.support:support-v13:${supportLibrary}",
-            supportAnnotation           : "com.android.support:support-annotations:${supportLibrary}",
-            supportCardView             : "com.android.support:cardview-v7:${supportLibrary}",
-            supportRecyclerView         : "com.android.support:recyclerview-v7:${supportLibrary}",
-            constraintLayout            : "com.android.support.constraint:constraint-layout:${constraintLayout}",
+            supportAppCompatV7              : "com.android.support:appcompat-v7:${supportLibrary}",
+            supportDesign                   : "com.android.support:design:${supportLibrary}",
+            supportV13                      : "com.android.support:support-v13:${supportLibrary}",
+            supportAnnotation               : "com.android.support:support-annotations:${supportLibrary}",
+            supportCardView                 : "com.android.support:cardview-v7:${supportLibrary}",
+            supportRecyclerView             : "com.android.support:recyclerview-v7:${supportLibrary}",
+            constraintLayout                : "com.android.support.constraint:constraint-layout:${constraintLayout}",
 
-            calligraphy                 : "uk.co.chrisjenx:calligraphy:${calligraphy}",
+            calligraphy                     : "uk.co.chrisjenx:calligraphy:${calligraphy}",
 
-            roomRuntime                 : "android.arch.persistence.room:runtime:${roomVersion}",
-            roomCompiler                : "android.arch.persistence.room:compiler:${roomVersion}",
-            roomTesting                 : "android.arch.persistence.room:testing:${roomVersion}",
+            roomRuntime                     : "android.arch.persistence.room:runtime:${room}",
+            roomCompiler                    : "android.arch.persistence.room:compiler:${room}",
+            roomTesting                     : "android.arch.persistence.room:testing:${room}",
 
-            archLifecycleRuntime        : "android.arch.lifecycle:runtime:${archLifecycle}",
-            archLifecycleExtensions     : "android.arch.lifecycle:extensions:${archLifecycle}",
-            archLifecycleReactiveStreams: "android.arch.lifecycle:reactivestreams:${archLifecycle}",
-            archLifecycleCompiler       : "android.arch.lifecycle:compiler:${archLifecycle}",
+            architectureComponentsExtensions: "android.arch.lifecycle:extensions:${architectureComponents}",
+            architectureComponentsCompiler  : "android.arch.lifecycle:compiler:${architectureComponents}",
 
-            autoValue                   : "com.google.auto.value:auto-value:${autoValue}",
-            autoValueGson               : "com.ryanharter.auto.value:auto-value-gson:${autoValueGson}",
+            autoValue                       : "com.google.auto.value:auto-value:${autoValue}",
+            autoValueGson                   : "com.ryanharter.auto.value:auto-value-gson:${autoValueGson}",
 
-            options                     : "com.github.tomaszpolanski:options:${options}",
+            options                         : "com.github.tomaszpolanski:options:${options}",
 
-            lottie                      : "com.airbnb.android:lottie:${lottie}",
+            lottie                          : "com.airbnb.android:lottie:${lottie}",
 
-            okHttp                      : "com.squareup.okhttp3:okhttp:${okHttp}",
-            okHttpInterceptor           : "com.squareup.okhttp3:logging-interceptor:${okHttp}",
-            picasso                     : "com.squareup.picasso:picasso:${picasso}",
+            okHttp                          : "com.squareup.okhttp3:okhttp:${okHttp}",
+            okHttpInterceptor               : "com.squareup.okhttp3:logging-interceptor:${okHttp}",
+            picasso                         : "com.squareup.picasso:picasso:${picasso}",
 
-            retrofit2                   : "com.squareup.retrofit2:retrofit:${retrofit2}",
-            retrofitRxAdapter           : "com.squareup.retrofit2:adapter-rxjava2:${retrofit2}",
-            retrofitConverter           : "com.squareup.retrofit2:converter-gson:${retrofit2}",
+            retrofit2                       : "com.squareup.retrofit2:retrofit:${retrofit2}",
+            retrofitRxAdapter               : "com.squareup.retrofit2:adapter-rxjava2:${retrofit2}",
+            retrofitConverter               : "com.squareup.retrofit2:converter-gson:${retrofit2}",
 
-            gson                        : "com.google.code.gson:gson:${gson}",
+            gson                            : "com.google.code.gson:gson:${gson}",
     ]
 
     commonTestDependencies = [
-            junit   : "junit:junit:${junit}",
-            assertj : "org.assertj:assertj-core:${assertJ}",
-            mockito : "org.mockito:mockito-core:${mockito}",
-            archTest: "android.arch.core:core-testing:${archLifecycle}"
+            junit                        : "junit:junit:${junit}",
+            assertj                      : "org.assertj:assertj-core:${assertJ}",
+            mockito                      : "org.mockito:mockito-core:${mockito}",
+            architectureComponentsTesting: "android.arch.core:core-testing:${architectureComponents}",
+
     ]
 
     developmentDependencies = [

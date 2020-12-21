@@ -2,14 +2,16 @@ package de.n26.n26androidsamples.base.data.store;
 
 import android.support.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.n26.n26androidsamples.base.common.rx.SchedulerProvider;
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 import polanski.option.Option;
@@ -32,14 +34,19 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     @NonNull
     private final Subject<Option<List<Value>>> allSubject;
 
+    @NotNull
+    private final SchedulerProvider schedulerProvider;
+
     @NonNull
     private final Map<Key, Subject<Option<Value>>> subjectMap = new HashMap<>();
 
     public MemoryReactiveStore(@NonNull final Func1<Value, Key> extractKeyFromModel,
-                               @NonNull final Store.MemoryStore<Key, Value> cache) {
+                               @NonNull final Store.MemoryStore<Key, Value> cache,
+                               @NotNull final SchedulerProvider schedulerProvider) {
         this.allSubject = PublishSubject.<Option<List<Value>>>create().toSerialized();
         this.cache = cache;
         this.extractKeyFromModel = extractKeyFromModel;
+        this.schedulerProvider = schedulerProvider;
     }
 
     public void storeSingular(@NonNull final Value model) {
@@ -67,13 +74,13 @@ public class MemoryReactiveStore<Key, Value> implements ReactiveStore<Key, Value
     @NonNull
     public Observable<Option<Value>> getSingular(@NonNull final Key key) {
         return Observable.defer(() -> getOrCreateSubjectForKey(key).startWith(getValue(key)))
-                         .observeOn(Schedulers.computation());
+                         .observeOn(schedulerProvider.computation());
     }
 
     @NonNull
     public Observable<Option<List<Value>>> getAll() {
         return Observable.defer(() -> allSubject.startWith(getAllValues()))
-                         .observeOn(Schedulers.computation());
+                         .observeOn(schedulerProvider.computation());
     }
 
     @NonNull

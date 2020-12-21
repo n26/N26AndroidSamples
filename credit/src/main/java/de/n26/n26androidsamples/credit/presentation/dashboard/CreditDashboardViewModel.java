@@ -6,15 +6,17 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import de.n26.n26androidsamples.base.common.rx.SchedulerProvider;
 import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
 import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftList;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static polanski.option.Option.none;
 
@@ -31,16 +33,23 @@ public class CreditDashboardViewModel extends ViewModel {
     @NonNull
     private final MutableLiveData<List<DisplayableItem>> creditListLiveData = new MutableLiveData<>();
 
-    @NonNull
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+    @NotNull
+    private final CompositeDisposable compositeDisposable;
+
+    @NotNull
+    private final SchedulerProvider schedulerProvider;
 
     @Inject
     CreditDashboardViewModel(@NonNull final RetrieveCreditDraftList retrieveCreditDraftList,
-                             @NonNull final CreditDisplayableItemMapper creditDisplayableItemMapper) {
+                             @NonNull final CreditDisplayableItemMapper creditDisplayableItemMapper,
+                             @NotNull final CompositeDisposable compositeDisposable,
+                             @NotNull final SchedulerProvider schedulerProvider) {
         this.retrieveCreditDraftList = retrieveCreditDraftList;
         this.creditDisplayableItemMapper = creditDisplayableItemMapper;
+        this.compositeDisposable = compositeDisposable;
+        this.schedulerProvider = schedulerProvider;
         // Bind view model
-        compositeDisposable.add(bindToCreditDrafts());
+        this.compositeDisposable.add(bindToCreditDrafts());
     }
 
     @Override
@@ -57,9 +66,9 @@ public class CreditDashboardViewModel extends ViewModel {
     @NonNull
     private Disposable bindToCreditDrafts() {
         return retrieveCreditDraftList.getBehaviorStream(none())
-                                      .observeOn(Schedulers.computation())
-                                      .map(creditDisplayableItemMapper)
-                                      .subscribe(creditListLiveData::postValue,
-                                                 e -> Log.e(TAG, "Error updating credit list live data", e));
+                .observeOn(schedulerProvider.computation())
+                .map(creditDisplayableItemMapper)
+                .subscribe(creditListLiveData::postValue,
+                        e -> Log.e(TAG, "Error updating credit list live data", e));
     }
 }

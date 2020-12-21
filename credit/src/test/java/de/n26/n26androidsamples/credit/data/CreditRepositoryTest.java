@@ -11,9 +11,11 @@ import java.util.List;
 
 import de.n26.n26androidsamples.base.data.store.ReactiveStore;
 import de.n26.n26androidsamples.credit.test_common.BaseTest;
-import io.reactivex.Flowable;
+import de.n26.n26androidsamples.credit.test_common.TestSchedulerProvider;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
 import polanski.option.Option;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -29,17 +31,21 @@ public class CreditRepositoryTest extends BaseTest {
     @Mock
     private CreditDraftMapper mapper;
 
+    private final TestScheduler schedulerProvider = new TestScheduler();
+
     private CreditRepository repository;
 
     @Before
     public void setUp() {
-        repository = new CreditRepository(store, service, mapper);
+        repository = new CreditRepository(store, service, mapper, new TestSchedulerProvider(schedulerProvider));
     }
 
     @Test
     public void getAllCreditDraftsReturnsStoreObservable() {
         Observable<Option<List<CreditDraft>>> storeObservable = Observable.empty();
         new ArrangeBuilder().withObservableFromStore(storeObservable);
+
+        schedulerProvider.triggerActions();
 
         assertThat(repository.getAllCreditDrafts()).isEqualTo(storeObservable);
     }
@@ -49,7 +55,11 @@ public class CreditRepositoryTest extends BaseTest {
         Throwable throwable = Mockito.mock(Throwable.class);
         new ArrangeBuilder().withErrorInCreditDraftsFromService(throwable);
 
-        repository.fetchCreditDrafts().test().assertError(throwable);
+        TestObserver<Void> testObserver = repository.fetchCreditDrafts().test();
+
+        schedulerProvider.triggerActions();
+        testObserver.assertError(throwable);
+
     }
 
     @Test
@@ -59,6 +69,8 @@ public class CreditRepositoryTest extends BaseTest {
                             .withMappedCredit(Mockito.mock(CreditDraft.class));
 
         repository.fetchCreditDrafts().subscribe();
+
+        schedulerProvider.triggerActions();
 
         Mockito.verify(mapper).apply(rawList.get(0));
         Mockito.verify(mapper).apply(rawList.get(1));
@@ -72,6 +84,8 @@ public class CreditRepositoryTest extends BaseTest {
                             .withMappedCredit(safe);
 
         repository.fetchCreditDrafts().subscribe();
+
+        schedulerProvider.triggerActions();
 
         Mockito.verify(store).replaceAll(Collections.singletonList(safe));
     }

@@ -15,6 +15,9 @@ import de.n26.n26androidsamples.base.presentation.recyclerview.DisplayableItem;
 import de.n26.n26androidsamples.credit.data.CreditDraft;
 import de.n26.n26androidsamples.credit.domain.RetrieveCreditDraftList;
 import de.n26.n26androidsamples.credit.test_common.BaseTest;
+import de.n26.n26androidsamples.credit.test_common.TestSchedulerProvider;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.TestScheduler;
 import io.reactivex.subjects.BehaviorSubject;
 import polanski.option.Option;
 
@@ -31,6 +34,8 @@ public class CreditDashboardViewModelTest extends BaseTest {
     @Mock
     private CreditDisplayableItemMapper mapper;
 
+    private final TestScheduler schedulerProvider = new TestScheduler();
+
     private CreditDashboardViewModel viewModel;
 
     private ArrangeBuilder arrangeBuilder;
@@ -41,7 +46,7 @@ public class CreditDashboardViewModelTest extends BaseTest {
     @Before
     public void setUp() {
         arrangeBuilder = new ArrangeBuilder();
-        viewModel = new CreditDashboardViewModel(interactor, mapper);
+        viewModel = new CreditDashboardViewModel(interactor, mapper, new CompositeDisposable(), new TestSchedulerProvider(schedulerProvider));
     }
 
     @Test
@@ -51,6 +56,9 @@ public class CreditDashboardViewModelTest extends BaseTest {
 
         arrangeBuilder.withMappedDisplayableItems(displayableItems)
                       .interactorEmitsCreditDrafts(creditDrafts);
+
+        // this triggers the scheduler action.
+        schedulerProvider.triggerActions();
 
         Mockito.verify(mapper).apply(creditDrafts);
     }
@@ -62,6 +70,8 @@ public class CreditDashboardViewModelTest extends BaseTest {
 
         arrangeBuilder.withMappedDisplayableItems(displayableItems)
                       .interactorEmitsCreditDrafts(creditDrafts);
+
+        schedulerProvider.triggerActions();
 
         assertThat(viewModel.getCreditListLiveData().getValue()).isEqualTo(displayableItems);
     }

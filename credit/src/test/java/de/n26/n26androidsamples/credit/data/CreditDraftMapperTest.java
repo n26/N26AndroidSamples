@@ -31,18 +31,18 @@ public class CreditDraftMapperTest extends BaseTest {
         thrown.expectMessage("status id purpose imageUrl");
 
         mapper.apply(CreditDataTestUtils.creditDraftRawTestBuilder()
-                                        .status(null)
-                                        .id(null)
-                                        .purposeName(null)
-                                        .imageUrl(null)
-                                        .build());
+                .status(null)
+                .id(null)
+                .purposeName(null)
+                .imageUrl(null)
+                .build());
     }
 
     @Test
     public void amountIsMappedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .amount(10.0)
-                                                .build();
+                .amount(10.0)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -52,8 +52,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void idIsMappedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .id("10")
-                                                .build();
+                .id("10")
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -63,8 +63,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void purposeIsMappedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .purposeName("Electronics")
-                                                .build();
+                .purposeName("Electronics")
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -74,8 +74,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void purposeIdIsMappedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .purposeId(5)
-                                                .build();
+                .purposeId(5)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -85,8 +85,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void imageUrlIsMappedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .imageUrl("imageUrl")
-                                                .build();
+                .imageUrl("imageUrl")
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -96,8 +96,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void noRepaymentInfoIsMappedToNone() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .repaymentInfo(null)
-                                                .build();
+                .repaymentInfo(null)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -108,8 +108,8 @@ public class CreditDraftMapperTest extends BaseTest {
     public void repaymentInfoIsMappedAndWrappedInOption() throws Exception {
         CreditRepaymentInfoRaw repaymentInfoRaw = CreditDataTestUtils.creditRepaymentInfoRawTestBuilder().build();
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .repaymentInfo(repaymentInfoRaw)
-                                                .build();
+                .repaymentInfo(repaymentInfoRaw)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -120,8 +120,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void contractProcessingStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.CONTRACT_PROCESSING)
-                                                .build();
+                .status(RawDraftStatus.CONTRACT_PROCESSING)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -131,8 +131,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void inRepaymentStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.IN_REPAYMENT)
-                                                .build();
+                .status(RawDraftStatus.IN_REPAYMENT)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -142,8 +142,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void initialisedStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.INITIALISED)
-                                                .build();
+                .status(RawDraftStatus.INITIALISED)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -153,8 +153,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void pendingEsignStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.PENDING_ESIGN)
-                                                .build();
+                .status(RawDraftStatus.PENDING_ESIGN)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -164,8 +164,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void pendingProviderApprovalStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.PENDING_PROVIDER_APPROVAL)
-                                                .build();
+                .status(RawDraftStatus.PENDING_PROVIDER_APPROVAL)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -175,8 +175,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void waitingForDisbursementStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.WAITING_FOR_DISBURSEMENT)
-                                                .build();
+                .status(RawDraftStatus.WAITING_FOR_DISBURSEMENT)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -186,8 +186,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void additionalAccountRequiredStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status(RawDraftStatus.ADDITIONAL_ACCOUNT_REQUIRED)
-                                                .build();
+                .status(RawDraftStatus.ADDITIONAL_ACCOUNT_REQUIRED)
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 
@@ -197,8 +197,8 @@ public class CreditDraftMapperTest extends BaseTest {
     @Test
     public void unexpectedStateIsParsedCorrectly() throws Exception {
         CreditDraftRaw raw = CreditDataTestUtils.creditDraftRawTestBuilder()
-                                                .status("UNEXPECTED")
-                                                .build();
+                .status("UNEXPECTED")
+                .build();
 
         CreditDraft draft = mapper.apply(raw);
 

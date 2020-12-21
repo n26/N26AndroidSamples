@@ -16,9 +16,7 @@ import de.n26.n26androidsamples.credit.data.CreditRepository;
 import de.n26.n26androidsamples.credit.test_common.BaseTest;
 import io.reactivex.Completable;
 import io.reactivex.observers.TestObserver;
-import io.reactivex.processors.BehaviorProcessor;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subscribers.TestSubscriber;
 import polanski.option.Option;
 
 import static org.mockito.Mockito.verify;

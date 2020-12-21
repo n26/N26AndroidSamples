@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.n26.n26androidsamples.base.BaseTest;
+import de.n26.n26androidsamples.base.test_common.BaseTest;
+import de.n26.n26androidsamples.base.test_common.TestSchedulerProvider;
 import de.n26.n26androidsamples.base.data.cache.Cache;
 import io.reactivex.Maybe;
 import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
 import polanski.option.Option;
 
 import static polanski.option.Option.none;
@@ -25,17 +27,28 @@ public class MemoryReactiveStoreTest extends BaseTest {
 
     private MemoryReactiveStore<String, TestObject> reactiveStore;
 
+    private final TestScheduler scheduler = new TestScheduler();
+
     @Before
     public void setUp() {
-        reactiveStore = new MemoryReactiveStore<>(TestObject::id, cache);
+        reactiveStore = new MemoryReactiveStore<>(TestObject::id, cache, new TestSchedulerProvider(scheduler));
     }
 
     @Test
     public void noneIsEmittedWhenCacheIsEmpty() {
         new ArrangeBuilder().withEmptyCache();
 
-        reactiveStore.getSingular("ID1").test().assertValue(none());
-        reactiveStore.getAll().test().assertValue(none());
+        TestObserver<Option<TestObject>> singularObserver = reactiveStore.getSingular("ID1").test();
+
+        scheduler.triggerActions();
+
+        singularObserver.assertValue(none());
+
+        TestObserver<Option<List<TestObject>>> getAllObserver = reactiveStore.getAll().test();
+
+        scheduler.triggerActions();
+
+        getAllObserver.assertValue(none());
     }
 
     @Test
@@ -45,7 +58,11 @@ public class MemoryReactiveStoreTest extends BaseTest {
                             .withCachedObjectList(Collections.singletonList(model));
 
         reactiveStore.storeSingular(model);
-        reactiveStore.getSingular("ID1").test().assertValue(ofObj(model));
+        TestObserver<Option<TestObject>> testObserver = reactiveStore.getSingular("ID1").test();
+
+        scheduler.triggerActions();
+
+        testObserver.assertValue(ofObj(model));
     }
 
     @Test
@@ -55,6 +72,8 @@ public class MemoryReactiveStoreTest extends BaseTest {
 
         TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
         reactiveStore.storeSingular(model);
+
+        scheduler.triggerActions();
 
         to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
     }
@@ -66,6 +85,8 @@ public class MemoryReactiveStoreTest extends BaseTest {
 
         TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
         reactiveStore.storeSingular(new TestObject(""));
+
+        scheduler.triggerActions();
 
         Mockito.verify(cache, Mockito.times(2)).getAll();
         to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
@@ -79,6 +100,8 @@ public class MemoryReactiveStoreTest extends BaseTest {
         TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
         reactiveStore.storeAll(createTestObjectList());
 
+        scheduler.triggerActions();
+
         to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
     }
 
@@ -89,6 +112,8 @@ public class MemoryReactiveStoreTest extends BaseTest {
 
         TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
         reactiveStore.storeAll(list);
+
+        scheduler.triggerActions();
 
         to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
     }
@@ -101,6 +126,8 @@ public class MemoryReactiveStoreTest extends BaseTest {
         TestObserver<Option<TestObject>> to = reactiveStore.getSingular("ID1").test();
         reactiveStore.replaceAll(createTestObjectList());
 
+        scheduler.triggerActions();
+
         to.assertValueAt(1, testObjectOption -> testObjectOption.equals(ofObj(model)));
     }
 
@@ -111,6 +138,8 @@ public class MemoryReactiveStoreTest extends BaseTest {
 
         TestObserver<Option<List<TestObject>>> to = reactiveStore.getAll().test();
         reactiveStore.replaceAll(list);
+
+        scheduler.triggerActions();
 
         to.assertValueAt(1, listOption -> listOption.equals(ofObj(list)));
     }

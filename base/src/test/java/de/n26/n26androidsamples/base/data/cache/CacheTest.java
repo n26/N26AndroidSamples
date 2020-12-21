@@ -1,5 +1,6 @@
 package de.n26.n26androidsamples.base.data.cache;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -7,8 +8,11 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.n26.n26androidsamples.base.BaseTest;
+import de.n26.n26androidsamples.base.test_common.BaseTest;
 import de.n26.n26androidsamples.base.common.providers.TimestampProvider;
+import de.n26.n26androidsamples.base.test_common.TestSchedulerProvider;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Mockito.when;
 
@@ -21,9 +25,11 @@ public class CacheTest extends BaseTest {
 
     private Cache<String, TestObject> cache;
 
+    private final TestScheduler scheduler = new TestScheduler();
+
     @Before
     public void setUp() {
-        cache = new Cache<>(TestObject::id, timestampProvider, timeoutMs);
+        cache = new Cache<>(TestObject::id, timestampProvider, new TestSchedulerProvider(scheduler),timeoutMs);
     }
 
     @Test
@@ -44,7 +50,12 @@ public class CacheTest extends BaseTest {
         cache.putSingular(object);
 
         arrangeBuilder.withCurrentMoment(timeoutMs - 500);
-        cache.getSingular(object.id).test().assertValue(object);
+
+        TestObserver<TestObject> testObserver = cache.getSingular(object.id).test();
+
+        scheduler.triggerActions();
+
+        testObserver.assertValue(object);
     }
 
     @Test
@@ -71,7 +82,11 @@ public class CacheTest extends BaseTest {
         cache.putAll(listToStore);
 
         arrangeBuilder.withCurrentMoment(timeoutMs - 500);
-        cache.getAll().test().assertValue(listToStore);
+        TestObserver<List<TestObject>> testObserver = cache.getAll().test();
+
+        scheduler.triggerActions();
+
+        testObserver.assertValue(listToStore);
     }
 
     @Test
@@ -100,18 +115,28 @@ public class CacheTest extends BaseTest {
         arrangeBuilder.withCurrentMoment(1);
         cache.putSingular(object1);
 
+        scheduler.triggerActions();
+
         arrangeBuilder.withCurrentMoment(100);
         cache.putSingular(object2);
 
+        scheduler.triggerActions();
+
         arrangeBuilder.withCurrentMoment(500);
         cache.putSingular(object3);
+
+        scheduler.triggerActions();
 
         arrangeBuilder.withCurrentMoment(timeoutMs + 50);
         List<TestObject> expected = new ArrayList<TestObject>() {{
             add(object2);
             add(object3);
         }};
-        cache.getAll().test().assertValue(expected);
+        TestObserver<List<TestObject>> testObserver = cache.getAll().test();
+
+        scheduler.triggerActions();
+
+        testObserver.assertValue(expected);
     }
 
     @Test
@@ -138,6 +163,7 @@ public class CacheTest extends BaseTest {
 
         private TestObject(final String id) {this.id = id;}
 
+        @NotNull
         private String id() {
             return id;
         }

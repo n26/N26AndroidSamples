@@ -12,7 +12,4 @@ public abstract class BaseTest {
 
     @Rule
     public final MockitoRule rule = MockitoJUnit.rule();
-
-    @Rule
-    public final RxSchedulerOverrideRule overrideSchedulersRule = new RxSchedulerOverrideRule();
 }

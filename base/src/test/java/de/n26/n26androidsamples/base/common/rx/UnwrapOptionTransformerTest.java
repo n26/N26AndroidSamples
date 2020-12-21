@@ -3,7 +3,7 @@ package de.n26.n26androidsamples.base.common.rx;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.n26.n26androidsamples.base.BaseTest;
+import de.n26.n26androidsamples.base.test_common.BaseTest;
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import polanski.option.Option;

@@ -1,4 +1,4 @@
-package de.n26.n26androidsamples.base;
+package de.n26.n26androidsamples.base.test_common;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -12,7 +12,4 @@ public abstract class BaseTest {
 
     @Rule
     public final MockitoRule rule = MockitoJUnit.rule();
-
-    @Rule
-    public final RxSchedulerOverrideRule overrideSchedulersRule = new RxSchedulerOverrideRule();
 }
